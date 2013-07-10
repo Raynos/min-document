@@ -3,6 +3,7 @@ function DOMText(value) {
 }
 
 DOMText.prototype.type = "DOMTextNode"
+DOMText.prototype.nodeType = 3
 
 DOMText.prototype.toString = function _Text_toString() {
     return this.data
@@ -17,6 +18,7 @@ function DOMElement(tagName) {
 }
 
 DOMElement.prototype.type = "DOMElement"
+DOMElement.prototype.nodeType = 1
 
 DOMElement.prototype.appendChild = function _Element_appendChild(child) {
     this.childNodes.push(child)
