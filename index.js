@@ -15,6 +15,7 @@ function DOMElement(tagName) {
     this.dataset = {}
     this.childNodes = []
     this.parentNode = null
+    this.style = {}
 }
 
 DOMElement.prototype.type = "DOMElement"
