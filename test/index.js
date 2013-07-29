@@ -23,3 +23,28 @@ test("can do stuff", function (assert) {
 
     assert.end()
 })
+
+
+test("can createDocumentFragment", function (assert) {
+	var frag = document.createDocumentFragment()
+
+	var h1 = document.createElement("h1")
+	var h2 = document.createElement("h2")
+
+
+    frag.appendChild(h1)
+    assert.equal(String(frag), "<h1>\n</h1>")
+
+    frag.appendChild(h2)
+    assert.equal(String(frag), "<h1>\n</h1><h2>\n</h2>")
+
+    frag.removeChild(h1)
+    assert.equal(String(frag), "<h2>\n</h2>")
+
+    frag.replaceChild(h1, h2)
+    assert.equal(String(frag), "<h1>\n</h1>")
+
+    assert.end()
+})
+
+
