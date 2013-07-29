@@ -47,7 +47,6 @@ DOMElement.prototype.focus = function _Element_focus() {
 
 DOMElement.prototype.toString = _Element_toString
 
-
 function DocumentFragment() {
     this.childNodes = []
     this.parentNode = null
@@ -61,14 +60,12 @@ DocumentFragment.prototype.appendChild  = DOMElement.prototype.appendChild
 DocumentFragment.prototype.replaceChild = DOMElement.prototype.replaceChild
 DocumentFragment.prototype.removeChild  = DOMElement.prototype.removeChild
 
-DocumentFragment.prototype.toString = _DocumentFragment_toString
-
-function _DocumentFragment_toString() {
-	return this.childNodes.reduce(function (output, node) {
-		return output + node.toString()
-    }, "")
-}
-
+DocumentFragment.prototype.toString =
+    function _DocumentFragment_toString() {
+        return this.childNodes.map(function (node) {
+            return String(node)
+        }).join("")
+    }
 
 module.exports = Document()
 

@@ -5,6 +5,8 @@ var document = require("../index")
 test("document is a Document", function (assert) {
     assert.equal(typeof document.createTextNode, "function")
     assert.equal(typeof document.createElement, "function")
+    assert.equal(typeof document.createDocumentFragment, "function")
+
     assert.end()
 })
 
@@ -26,10 +28,10 @@ test("can do stuff", function (assert) {
 
 
 test("can createDocumentFragment", function (assert) {
-	var frag = document.createDocumentFragment()
+    var frag = document.createDocumentFragment()
 
-	var h1 = document.createElement("h1")
-	var h2 = document.createElement("h2")
+    var h1 = document.createElement("h1")
+    var h2 = document.createElement("h2")
 
 
     frag.appendChild(h1)
