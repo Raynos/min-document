@@ -67,13 +67,17 @@ DocumentFragment.prototype.toString =
         }).join("")
     }
 
+var body = createElement("body")
+
 module.exports = Document()
 
 function Document() {
     return {
+        body: body,
         createTextNode: createTextNode,
         createElement: createElement,
-        createDocumentFragment: createDocumentFragment
+        createDocumentFragment: createDocumentFragment,
+        getElementById: getElementById
     }
 }
 
@@ -87,6 +91,30 @@ function createElement(tagName) {
 
 function createDocumentFragment() {
     return new DocumentFragment()
+}
+
+/*
+* getElementById returns the Element whose ID is given by elementId.
+* If no such element exists, returns null.
+* Behavior is not defined if more than one element has this ID.
+*/
+
+function recursive_getElementById(id, elem) {
+    if (""+elem.id === ""+id) return elem
+
+    var arr = elem.childNodes
+    , result = null
+
+    if (arr) {
+        for (var i = 0, len = arr.length; !result && i < len; i++) {
+            result = recursive_getElementById(id, arr[i])
+        }
+    }
+    return result
+}
+
+function getElementById(id) {
+    return recursive_getElementById(id, body)
 }
 
 function _Element_toString() {
