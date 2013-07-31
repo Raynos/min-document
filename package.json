@@ -1,6 +1,6 @@
 {
   "name": "min-document",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "A minimal DOM implementation",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
