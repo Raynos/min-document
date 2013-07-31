@@ -98,23 +98,29 @@ function createDocumentFragment() {
 * If no such element exists, returns null.
 * Behavior is not defined if more than one element has this ID.
 */
+function getElementById(id, parent) {
+    if (!parent) {
+        parent = body
+    }
 
-function recursive_getElementById(id, elem) {
-    if (""+elem.id === ""+id) return elem
+    if (String(parent.id) === String(id)) {
+        return parent
+    }
 
-    var arr = elem.childNodes
-    , result = null
+    var arr = parent.childNodes
+    var result = null
 
-    if (arr) {
-        for (var i = 0, len = arr.length; !result && i < len; i++) {
-            result = recursive_getElementById(id, arr[i])
+    if (!arr) {
+        return result
+    }
+
+    for (var i = 0, len = arr.length; !result && i < len; i++) {
+        result = getElementById(id, arr[i])
+
+        if (result) {
+            return result
         }
     }
-    return result
-}
-
-function getElementById(id) {
-    return recursive_getElementById(id, body)
 }
 
 function _Element_toString() {
