@@ -30,9 +30,13 @@ test("can do stuff", function (assert) {
 test("can createDocumentFragment", function (assert) {
     var frag = document.createDocumentFragment()
 
+    assert.equal(frag.nodeType, 11)
+
     var h1 = document.createElement("h1")
     var h2 = document.createElement("h2")
 
+    assert.equal(h1.nodeType, 1)
+    assert.equal(h1.nodeType, 1)
 
     frag.appendChild(h1)
     assert.equal(String(frag), "<h1>\n</h1>")
@@ -83,3 +87,17 @@ test("can getElementById", function (assert) {
     assert.end()
 })
 
+test("can create/manipulate textnodes", function (assert) {
+    var textnode = document.createTextNode("hello")
+
+    assert.equal(textnode.nodeType, 3)
+    assert.equal(textnode.data, "hello")
+    assert.equal(typeof textnode.replaceData, "function")
+
+    textnode.replaceData("goodbye")
+    assert.equal(textnode.nodeType, 3)
+    assert.equal(textnode.data, "goodbye")
+    assert.equal(typeof textnode.replaceData, "function")
+
+    assert.end()
+})

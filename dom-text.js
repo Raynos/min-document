@@ -14,3 +14,7 @@ DOMText.prototype.nodeType = 3
 DOMText.prototype.toString = function _Text_toString() {
     return this.data
 }
+
+DOMText.prototype.replaceData = function replaceData(value) {
+    this.data = value
+}
