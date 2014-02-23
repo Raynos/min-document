@@ -35,9 +35,9 @@ var html = String(div)
 
 ## MIT Licenced
 
-  [1]: https://secure.travis-ci.org/Colingo/min-document.png
-  [2]: https://travis-ci.org/Colingo/min-document
-  [3]: https://david-dm.org/Colingo/min-document.png
-  [4]: https://david-dm.org/Colingo/min-document
-  [5]: https://ci.testling.com/Colingo/min-document.png
-  [6]: https://ci.testling.com/Colingo/min-document
+  [1]: https://secure.travis-ci.org/Raynos/min-document.png
+  [2]: https://travis-ci.org/Raynos/min-document
+  [3]: https://david-dm.org/Raynos/min-document.png
+  [4]: https://david-dm.org/Raynos/min-document
+  [5]: https://ci.testling.com/Raynos/min-document.png
+  [6]: https://ci.testling.com/Raynos/min-document
