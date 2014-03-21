@@ -94,10 +94,14 @@ test("can create/manipulate textnodes", function (assert) {
     assert.equal(textnode.data, "hello")
     assert.equal(typeof textnode.replaceData, "function")
 
-    textnode.replaceData("goodbye")
+    textnode.replaceData(0, 7, "nightly")
     assert.equal(textnode.nodeType, 3)
-    assert.equal(textnode.data, "goodbye")
+    assert.equal(textnode.data, "nightly")
     assert.equal(typeof textnode.replaceData, "function")
+
+    textnode.replaceData(1, 1, "ou")
+    assert.equal(textnode.nodeType, 3)
+    assert.equal(textnode.data, "noughtly")
 
     assert.end()
 })
