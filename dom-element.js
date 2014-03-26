@@ -1,3 +1,5 @@
+var dispatchEvent = require("./event/dispatch-event.js")
+var addEventListener = require("./event/add-event-listener.js")
 var serializeElement = require("./serialize.js")
 
 module.exports = DOMElement
@@ -36,6 +38,9 @@ DOMElement.prototype.removeChild = function _Element_removeChild(elem) {
 
     this.childNodes.splice(index, 1)
 }
+
+DOMElement.prototype.addEventListener = addEventListener
+DOMElement.prototype.dispatchEvent = dispatchEvent
 
 // Un-implemented
 DOMElement.prototype.focus = function _Element_focus() {
