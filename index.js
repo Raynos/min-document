@@ -1,17 +1,23 @@
 var DOMText = require("./dom-text.js")
 var DOMElement = require("./dom-element.js")
 var DocumentFragment = require("./dom-fragment.js")
+var Event = require("./event.js")
 
 var body = createElement("body")
+var documentElement = createElement("html")
+
+documentElement.appendChild(body)
 
 module.exports = Document()
 
 function Document() {
     return {
         body: body,
+        documentElement: documentElement,
         createTextNode: createTextNode,
         createElement: createElement,
         createDocumentFragment: createDocumentFragment,
+        createEvent: createEvent,
         getElementById: getElementById,
         Document: Document,
         Text: DOMText,
@@ -30,6 +36,10 @@ function createElement(tagName) {
 
 function createDocumentFragment() {
     return new DocumentFragment()
+}
+
+function createEvent(family) {
+    return new Event(family)
 }
 
 /*
@@ -59,4 +69,3 @@ function getElementById(id, parent) {
 
     return result
 }
-
