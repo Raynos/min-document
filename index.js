@@ -4,14 +4,16 @@ var DocumentFragment = require("./dom-fragment.js")
 var Event = require("./event.js")
 
 var body = createElement("body")
-var rootElement = createElement("html")
+var documentElement = createElement("html")
+
+documentElement.appendChild(body)
 
 module.exports = Document()
 
 function Document() {
     return {
         body: body,
-        rootElement: rootElement,
+        documentElement: documentElement,
         createTextNode: createTextNode,
         createElement: createElement,
         createDocumentFragment: createDocumentFragment,
