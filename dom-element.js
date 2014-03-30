@@ -15,6 +15,7 @@ function DOMElement(tagName) {
     this.childNodes = []
     this.parentNode = null
     this.style = {}
+    this.ownerDocument = require("./index")
 }
 
 DOMElement.prototype.type = "DOMElement"
