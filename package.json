@@ -1,6 +1,6 @@
 {
   "name": "min-document",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A minimal DOM implementation",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
@@ -20,7 +20,7 @@
     "tape": "~1.0.2"
   },
   "devDependencies": {
-    "tape": "~1.0.2"
+    "tape": "^2.12.1"
   },
   "licenses": [
     {
