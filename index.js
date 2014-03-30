@@ -26,21 +26,27 @@ function Document() {
     }
 }
 
+function ownerDocument(that, node) {
+    node.ownerDocument = that
+    return node
+}
+
 function createTextNode(value) {
-    return new DOMText(value)
+    return  ownerDocument(this, new DOMText(value))
 }
 
 function createElement(tagName) {
-    return new DOMElement(tagName)
+    return ownerDocument(this, new DOMElement(tagName))
 }
 
 function createDocumentFragment() {
-    return new DocumentFragment()
+    return ownerDocument(this, new DocumentFragment())
 }
 
 function createEvent(family) {
     return new Event(family)
 }
+
 
 /*
 * getElementById returns the Element whose ID is given by elementId.

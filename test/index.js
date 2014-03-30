@@ -105,3 +105,15 @@ test("can create/manipulate textnodes", function (assert) {
 
     assert.end()
 })
+
+test("owner document is set", function (assert) {
+    var textnode = document.createTextNode("hello")
+    var domnode = document.createElement("div")
+    var fragment = document.createDocumentFragment()
+
+    assert.equal(textnode.ownerDocument, document)
+    assert.equal(domnode.ownerDocument, document)
+    assert.equal(fragment.ownerDocument, document)
+
+    assert.end()
+})
