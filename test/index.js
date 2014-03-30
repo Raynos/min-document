@@ -105,3 +105,10 @@ test("can create/manipulate textnodes", function (assert) {
 
     assert.end()
 })
+
+test("nodes have an ownerDocument", function (assert) {
+    var node = document.createElement("div")
+
+    assert.equal(node.ownerDocument, document)
+    assert.end()
+})
