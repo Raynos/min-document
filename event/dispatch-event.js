@@ -17,7 +17,11 @@ function dispatchEvent(ev) {
     if (listeners) {
         return listeners.forEach(function (listener) {
             ev.currentTarget = elem
-            listener(ev)
+            if (typeof listener === 'function') {
+                listener(ev)
+            } else {
+                listener.handleEvent(ev)
+            }
         })
     }
 
