@@ -9,7 +9,7 @@ function DOMElement(tagName) {
         return new DOMElement(tagName)
     }
 
-    this.tagName = tagName
+    this.tagName = String(tagName).toUpperCase()
     this.className = ""
     this.dataset = {}
     this.childNodes = []
