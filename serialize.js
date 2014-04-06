@@ -3,8 +3,8 @@ module.exports = serializeElement
 function serializeElement(elem) {
     var strings = []
 
-    strings.push("<" + elem.tagName + properties(elem) +
-        datasetify(elem) + ">")
+    strings.push("<" + elem.tagName.toLowerCase() +
+        properties(elem) + datasetify(elem) + ">")
 
     if (elem.textContent) {
         strings.push(elem.textContent)
@@ -14,7 +14,7 @@ function serializeElement(elem) {
         strings.push(node.toString())
     })
 
-    strings.push("</" + elem.tagName + ">")
+    strings.push("</" + elem.tagName.toLowerCase() + ">")
 
     return strings.join("\n")
 }
