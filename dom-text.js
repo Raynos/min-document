@@ -1,12 +1,13 @@
 module.exports = DOMText
 
-function DOMText(value) {
+function DOMText(value, owner) {
     if (!(this instanceof DOMText)) {
         return new DOMText(value)
     }
 
     this.data = value || ""
     this.length = this.data.length
+    this.ownerDocument = owner || null
 }
 
 DOMText.prototype.type = "DOMTextNode"

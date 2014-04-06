@@ -4,7 +4,7 @@ var serializeElement = require("./serialize.js")
 
 module.exports = DOMElement
 
-function DOMElement(tagName) {
+function DOMElement(tagName, owner) {
     if (!(this instanceof DOMElement)) {
         return new DOMElement(tagName)
     }
@@ -15,6 +15,7 @@ function DOMElement(tagName) {
     this.childNodes = []
     this.parentNode = null
     this.style = {}
+    this.ownerDocument = owner || null;
 }
 
 DOMElement.prototype.type = "DOMElement"

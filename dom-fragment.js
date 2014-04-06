@@ -2,13 +2,14 @@ var DOMElement = require("./dom-element.js")
 
 module.exports = DocumentFragment
 
-function DocumentFragment() {
+function DocumentFragment(owner) {
     if (!(this instanceof DocumentFragment)) {
         return new DocumentFragment()
     }
 
     this.childNodes = []
     this.parentNode = null
+    this.ownerDocument = owner || null
 }
 
 DocumentFragment.prototype.type = "DocumentFragment"
