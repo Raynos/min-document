@@ -125,28 +125,39 @@ function testDocument(document) {
 
         var noNS = document.createElement("div")
         var svgNS = document.createElementNS(svgURI, "svg")
-        var emptyStringNS = document.createElementNS("", "div")
+        var emptyNS = document.createElementNS("", "div")
         var nullNS = document.createElementNS(null, "div")
-        var undefinedNS = document.createElementNS(undefined, "div")
+        var undefNS = document.createElementNS(undefined, "div")
+        var caseNS = document.createElementNS("Oops", "AbC")
         var htmlNS = document.createElement("div")
 
         assert.equal(noNS.tagName, "DIV")
         assert.equal(noNS.namespaceURI, htmlURI)
+        assert.equal(String(noNS.outerHTML || noNS), "<div></div>")
 
         assert.equal(svgNS.tagName, "svg")
         assert.equal(svgNS.namespaceURI, svgURI)
+        assert.equal(String(svgNS.outerHTML || svgNS), "<svg></svg>")
 
-        assert.equal(emptyStringNS.tagName, "div")
-        assert.equal(emptyStringNS.namespaceURI, null)
+        assert.equal(emptyNS.tagName, "div")
+        assert.equal(emptyNS.namespaceURI, null)
+        assert.equal(String(emptyNS.outerHTML || emptyNS), "<div></div>")
 
         assert.equal(nullNS.tagName, "div")
         assert.equal(nullNS.namespaceURI, null)
+        assert.equal(String(nullNS.outerHTML || nullNS), "<div></div>")
 
-        assert.equal(undefinedNS.tagName, "div")
-        assert.equal(undefinedNS.namespaceURI, "undefined")
+        assert.equal(undefNS.tagName, "div")
+        assert.equal(undefNS.namespaceURI, "undefined")
+        assert.equal(String(undefNS.outerHTML || undefNS), "<div></div>")
+
+        assert.equal(caseNS.tagName, "AbC")
+        assert.equal(caseNS.namespaceURI, "Oops")
+        assert.equal(String(caseNS.outerHTML || caseNS), "<AbC></AbC>")
 
         assert.equal(htmlNS.tagName, "DIV")
         assert.equal(htmlNS.namespaceURI, htmlURI)
+        assert.equal(String(htmlNS.outerHTML || undefNS), "<div></div>")
 
         assert.end()
     })

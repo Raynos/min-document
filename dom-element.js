@@ -11,7 +11,7 @@ function DOMElement(tagName, owner, namespace) {
         return new DOMElement(tagName)
     }
 
-    var ns = namespace === undefined ? htmlns : namespace || null
+    var ns = namespace === undefined ? htmlns : (namespace || null)
 
     this.tagName = ns === htmlns ? String(tagName).toUpperCase() : tagName
     this.className = ""
