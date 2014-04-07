@@ -133,34 +133,50 @@ function testDocument(document) {
 
         assert.equal(noNS.tagName, "DIV")
         assert.equal(noNS.namespaceURI, htmlURI)
-        assert.equal(String(noNS.outerHTML || noNS), "<div></div>")
+        assert.equal(elemString(noNS), "<div></div>")
 
         assert.equal(svgNS.tagName, "svg")
         assert.equal(svgNS.namespaceURI, svgURI)
-        assert.equal(String(svgNS.outerHTML || svgNS), "<svg></svg>")
+        assert.equal(elemString(svgNS), "<svg></svg>")
 
         assert.equal(emptyNS.tagName, "div")
         assert.equal(emptyNS.namespaceURI, null)
-        assert.equal(String(emptyNS.outerHTML || emptyNS), "<div></div>")
+        assert.equal(elemString(emptyNS), "<div></div>")
 
         assert.equal(nullNS.tagName, "div")
         assert.equal(nullNS.namespaceURI, null)
-        assert.equal(String(nullNS.outerHTML || nullNS), "<div></div>")
+        assert.equal(elemString(nullNS), "<div></div>")
 
         assert.equal(undefNS.tagName, "div")
         assert.equal(undefNS.namespaceURI, "undefined")
-        assert.equal(String(undefNS.outerHTML || undefNS), "<div></div>")
+        assert.equal(elemString(undefNS), "<div></div>")
 
         assert.equal(caseNS.tagName, "AbC")
         assert.equal(caseNS.namespaceURI, "Oops")
-        assert.equal(String(caseNS.outerHTML || caseNS), "<AbC></AbC>")
+        assert.equal(elemString(caseNS), "<AbC></AbC>")
 
         assert.equal(htmlNS.tagName, "DIV")
         assert.equal(htmlNS.namespaceURI, htmlURI)
-        assert.equal(String(htmlNS.outerHTML || undefNS), "<div></div>")
+        assert.equal(elemString(htmlNS), "<div></div>")
 
         assert.end()
     })
+
+    function elemString(element) {
+        var html = String(element) || "[]"
+
+        if (html.charAt(0) === "[") {
+            html = element.outerHTML
+            if (!html && !element.parentNode) {
+                var div = document.createElement("div")
+                div.appendChild(element)
+                html = div.innerHTML
+                div.removeChild(element)
+            }
+        }
+
+        return html
+    }
 
     function fragString(fragment) {
         var html = String(fragment)
