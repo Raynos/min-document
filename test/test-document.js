@@ -19,10 +19,10 @@ function testDocument(document) {
         div.appendChild(span)
         span.textContent = "Hello!"
 
-        var html = String(div)
+        var html = String(div.outerHTML || div)
 
-        assert.equal(html, "<div class=\"foo bar\">\n" +
-            "<span>\nHello!\n</span>\n</div>")
+        assert.equal(html, "<div class=\"foo bar\">" +
+            "<span>Hello!</span></div>")
 
         assert.end()
     })
@@ -40,16 +40,16 @@ function testDocument(document) {
         assert.equal(h1.nodeType, 1)
 
         frag.appendChild(h1)
-        assert.equal(String(frag), "<h1>\n</h1>")
+        assert.equal(fragString(frag), "<h1></h1>")
 
         frag.appendChild(h2)
-        assert.equal(String(frag), "<h1>\n</h1><h2>\n</h2>")
+        assert.equal(fragString(frag), "<h1></h1><h2></h2>")
 
         frag.removeChild(h1)
-        assert.equal(String(frag), "<h2>\n</h2>")
+        assert.equal(fragString(frag), "<h2></h2>")
 
         frag.replaceChild(h1, h2)
-        assert.equal(String(frag), "<h1>\n</h1>")
+        assert.equal(fragString(frag), "<h1></h1>")
 
         assert.end()
     })
@@ -150,4 +150,22 @@ function testDocument(document) {
 
         assert.end()
     })
+
+    function fragString(fragment) {
+        var html = String(fragment)
+
+
+        if (html === "[object DocumentFragment]") {
+            var innerHTML = []
+            for (var i = 0; i < fragment.childNodes.length; i++) {
+                var node = fragment.childNodes[i]
+                innerHTML.push(String(node.outerHTML || node))
+            }
+            html = innerHTML.join("")
+        }
+
+        return html
+    }
 }
+
+

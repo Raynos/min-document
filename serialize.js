@@ -16,7 +16,7 @@ function serializeElement(elem) {
 
     strings.push("</" + elem.tagName.toLowerCase() + ">")
 
-    return strings.join("\n")
+    return strings.join("")
 }
 
 function isProperty(elem, key) {

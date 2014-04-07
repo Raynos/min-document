@@ -18,6 +18,9 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "run-browser": "^1.2.0",
+    "tap-dot": "^0.2.1",
+    "tap-spec": "^0.1.8",
     "tape": "^2.12.3"
   },
   "licenses": [
@@ -27,7 +30,12 @@
     }
   ],
   "scripts": {
-    "test": "node ./test/index.js"
+    "test": "node ./test/index.js | tap-spec",
+    "dot": "node ./test/index.js | tap-dot",
+    "cover": "istanbul cover --report none --print detail ./test/index.js",
+    "view-cover": "istanbul report html && google-chrome ./coverage/index.html",
+    "browser": "run-browser test/index.js",
+    "phantom": "run-browser test/index.js -b | tap-spec"
   },
   "testling": {
     "files": "test/index.js",
