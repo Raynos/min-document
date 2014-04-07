@@ -25,7 +25,7 @@ function isProperty(elem, key) {
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent"
+        key !== "textContent" && key !== "namespaceURI"
 }
 
 function stylify(styles) {

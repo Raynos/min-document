@@ -20,6 +20,11 @@ proto.createTextNode = function createTextNode(value) {
     return new DOMText(value, this)
 }
 
+proto.createElementNS = function createElementNS(namespace, tagName) {
+    var ns = namespace === null ? null : String(namespace)
+    return new DOMElement(tagName, this, ns)
+}
+
 proto.createElement = function createElement(tagName) {
     return new DOMElement(tagName, this)
 }
