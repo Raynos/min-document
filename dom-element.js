@@ -2,20 +2,25 @@ var dispatchEvent = require("./event/dispatch-event.js")
 var addEventListener = require("./event/add-event-listener.js")
 var serializeElement = require("./serialize.js")
 
+var htmlns = "http://www.w3.org/1999/xhtml"
+
 module.exports = DOMElement
 
-function DOMElement(tagName, owner) {
+function DOMElement(tagName, owner, namespace) {
     if (!(this instanceof DOMElement)) {
         return new DOMElement(tagName)
     }
 
-    this.tagName = String(tagName).toUpperCase()
+    var ns = namespace === undefined ? htmlns : (namespace || null)
+
+    this.tagName = ns === htmlns ? String(tagName).toUpperCase() : tagName
     this.className = ""
     this.dataset = {}
     this.childNodes = []
     this.parentNode = null
     this.style = {}
-    this.ownerDocument = owner || null;
+    this.ownerDocument = owner || null
+    this.namespaceURI = ns
 }
 
 DOMElement.prototype.type = "DOMElement"

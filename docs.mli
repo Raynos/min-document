@@ -26,6 +26,7 @@ type DOMElement := {
     type: "DOMElement",
     nodeType: 1,
     ownerDoucment: null | Document,
+    namespaceURI: null | String,
 
     appendChild: (this: DOMElement, child: DOMChild),
     replaceChild:
@@ -46,7 +47,7 @@ type DocumentFragment := {
     ownerDoucment: Document | null,
 
     appendChild: (this: DocumentFragment, child: DOMChild),
-    replaceChild: 
+    replaceChild:
         (this: DocumentFragment, elem: DOMChild, needle: DOMChild),
     removeChild: (this: DocumentFragment, child: DOMChild),
     toString: (this: DocumentFragment) => String
@@ -58,6 +59,11 @@ type Document := {
 
     createTextNode: (this: Document, value: String) => DOMText,
     createElement: (this: Document, tagName: String) => DOMElement,
+    createElementNS: (
+        this: Document,
+        namespace: String | null,
+        tagName: String
+    ) => DOMElement
     createDocumentFragment: (this: Document) => DocumentFragment,
     createEvent: () => Event,
     getElementById: (
@@ -98,12 +104,12 @@ min-document/event/dispatch-event := dispatchEvent
 min-document/document := () => Document
 
 min-document/dom-element :=
-    (tagName: String, owner?: Document) => DOMElement 
+    (tagName: String, owner?: Document, namespace?: String | null) => DOMElement
 
 min-document/dom-fragment :=
     (owner?: Document) => DocumentFragment
 
-min-document/dom-text := 
+min-document/dom-text :=
     (value: String, owner?: Document) => DOMText
 
 min-document/event := () => Event

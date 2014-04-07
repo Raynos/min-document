@@ -3,7 +3,13 @@ module.exports = serializeElement
 function serializeElement(elem) {
     var strings = []
 
-    strings.push("<" + elem.tagName.toLowerCase() +
+    var tagname = elem.tagName
+
+    if (elem.namespaceURI === "http://www.w3.org/1999/xhtml") {
+        tagname = tagname.toLowerCase()
+    }
+
+    strings.push("<" + tagname +
         properties(elem) + datasetify(elem) + ">")
 
     if (elem.textContent) {
@@ -14,9 +20,9 @@ function serializeElement(elem) {
         strings.push(node.toString())
     })
 
-    strings.push("</" + elem.tagName.toLowerCase() + ">")
+    strings.push("</" + tagname + ">")
 
-    return strings.join("\n")
+    return strings.join("")
 }
 
 function isProperty(elem, key) {
@@ -25,7 +31,7 @@ function isProperty(elem, key) {
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent"
+        key !== "textContent" && key !== "namespaceURI"
 }
 
 function stylify(styles) {
