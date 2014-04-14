@@ -28,11 +28,18 @@ type DOMElement := {
     ownerDoucment: null | Document,
     namespaceURI: null | String,
 
-    appendChild: (this: DOMElement, child: DOMChild),
-    replaceChild:
-        (this: DOMElement, elem: DOMChild, needle: DOMChild),
-    removeChild: (this: DOMElement, child: DOMChild),
-    insertBefore: (this: DOMElement, elem: DOMChild, needle: DOMChild | null),
+    appendChild: (this: DOMElement, child: DOMChild) => DOMChild,
+    replaceChild:(
+        this: DOMElement,
+        elem: DOMChild,
+        needle: DOMChild
+    ) => DOMChild,
+    removeChild: (this: DOMElement, child: DOMChild) => DOMChild,
+    insertBefore: (
+        this: DOMElement,
+        elem: DOMChild,
+        needle: DOMChild | null | undefined
+    ) => DOMChild,
     addEventListener: addEventListener,
     dispatchEvent: dispatchEvent,
     focus: () => void,
