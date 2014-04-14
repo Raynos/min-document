@@ -32,6 +32,7 @@ type DOMElement := {
     replaceChild:
         (this: DOMElement, elem: DOMChild, needle: DOMChild),
     removeChild: (this: DOMElement, child: DOMChild),
+    insertBefore: (this: DOMElement, elem: DOMChild, needle: DOMChild | null),
     addEventListener: addEventListener,
     dispatchEvent: dispatchEvent,
     focus: () => void,

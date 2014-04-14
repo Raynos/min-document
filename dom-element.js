@@ -60,25 +60,25 @@ DOMElement.prototype.removeChild = function _Element_removeChild(elem) {
 }
 
 DOMElement.prototype.insertBefore =
-    function _Element_insertBefore(newElement, referenceElement) {
+    function _Element_insertBefore(elem, needle) {
         // TODO: Throw NotFoundError if referenceElement is a dom node
         // and parentNode !== this
 
-        if (newElement.parentNode) {
-            newElement.parentNode.removeChild(newElement)
+        if (elem.parentNode) {
+            elem.parentNode.removeChild(elem)
         }
 
-        var index = referenceElement ?
-            this.childNodes.indexOf(referenceElement) :
+        var index = needle ?
+            this.childNodes.indexOf(needle) :
             -1
 
         if (index > -1) {
-            this.childNodes.splice(index, 0, newElement)
+            this.childNodes.splice(index, 0, elem)
         } else {
-            this.childNodes.push(newElement)
+            this.childNodes.push(elem)
         }
 
-        newElement.parentNode = this
+        elem.parentNode = this
     }
 
 DOMElement.prototype.addEventListener = addEventListener
