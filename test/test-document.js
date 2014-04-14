@@ -54,7 +54,6 @@ function testDocument(document) {
         assert.end()
     })
 
-
     test("can getElementById", function (assert) {
 
         function append_div(id, parent) {
@@ -158,6 +157,57 @@ function testDocument(document) {
         assert.equal(htmlNS.tagName, "DIV")
         assert.equal(htmlNS.namespaceURI, htmlURI)
         assert.equal(elemString(htmlNS), "<div></div>")
+
+        assert.end()
+    })
+
+    test("Can insert before", function (assert) {
+        var rootNode = document.createElement("div")
+        var child = document.createElement("div")
+        var newElement = document.createElement("div")
+        rootNode.appendChild(child)
+        rootNode.insertBefore(newElement, child)
+        assert.equal(rootNode.childNodes.length, 2)
+        assert.equal(rootNode.childNodes[0], newElement)
+        assert.equal(rootNode.childNodes[1], child)
+        assert.end()
+    })
+
+    test("Insert before null appends to end", function (assert) {
+        var rootNode = document.createElement("div")
+        var child = document.createElement("div")
+        var newElement = document.createElement("div")
+        rootNode.appendChild(child)
+        rootNode.insertBefore(newElement, null)
+        assert.equal(rootNode.childNodes.length, 2)
+        assert.equal(rootNode.childNodes[0], child)
+        assert.equal(rootNode.childNodes[1], newElement)
+        assert.end()
+    })
+
+    test("Node insertions remove node from parent", function (assert) {
+        var parent = document.createElement("div")
+        var c1 = document.createElement("div")
+        var c2 = document.createElement("div")
+        var c3 = document.createElement("div")
+        parent.appendChild(c1)
+        parent.appendChild(c2)
+        parent.appendChild(c3)
+
+        var rootNode = document.createElement("div")
+
+        rootNode.appendChild(c1)
+        assert.equal(parent.childNodes.length, 2)
+        assert.equal(c1.parentNode, rootNode)
+
+        rootNode.insertBefore(c2, c1)
+        assert.equal(parent.childNodes.length, 1)
+        assert.equal(c2.parentNode, rootNode)
+
+        rootNode.replaceChild(c3, c2)
+        assert.equal(parent.childNodes.length, 0)
+        assert.equal(c3.parentNode, rootNode)
+        assert.equal(c2.parentNode, null)
 
         assert.end()
     })
