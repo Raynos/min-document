@@ -33,6 +33,8 @@ DOMElement.prototype.appendChild = function _Element_appendChild(child) {
 
     this.childNodes.push(child)
     child.parentNode = this
+
+    return child
 }
 
 DOMElement.prototype.replaceChild =
@@ -48,37 +50,41 @@ DOMElement.prototype.replaceChild =
         needle.parentNode = null
         this.childNodes[index] = elem
         elem.parentNode = this
+
+        return needle
     }
 
 DOMElement.prototype.removeChild = function _Element_removeChild(elem) {
     // TODO: Throw NotFoundError if elem.parentNode !== this
 
     var index = this.childNodes.indexOf(elem)
-
-    this.childNodes[index].parentNode = null
     this.childNodes.splice(index, 1)
+
+    elem.parentNode = null
+    return elem
 }
 
 DOMElement.prototype.insertBefore =
-    function _Element_insertBefore(newElement, referenceElement) {
+    function _Element_insertBefore(elem, needle) {
         // TODO: Throw NotFoundError if referenceElement is a dom node
         // and parentNode !== this
 
-        if (newElement.parentNode) {
-            newElement.parentNode.removeChild(newElement)
+        if (elem.parentNode) {
+            elem.parentNode.removeChild(elem)
         }
 
-        var index = referenceElement ?
-            this.childNodes.indexOf(referenceElement) :
-            -1
+        var index = needle === null || needle === undefined ?
+            -1 :
+            this.childNodes.indexOf(needle)
 
         if (index > -1) {
-            this.childNodes.splice(index, 0, newElement)
+            this.childNodes.splice(index, 0, elem)
         } else {
-            this.childNodes.push(newElement)
+            this.childNodes.push(elem)
         }
 
-        newElement.parentNode = this
+        elem.parentNode = this
+        return elem
     }
 
 DOMElement.prototype.addEventListener = addEventListener
