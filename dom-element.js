@@ -1,6 +1,6 @@
 var dispatchEvent = require("./event/dispatch-event.js")
 var addEventListener = require("./event/add-event-listener.js")
-var removeEventListener require("./event/remove-event-listener.js")
+var removeEventListener = require("./event/remove-event-listener.js")
 var serializeElement = require("./serialize.js")
 
 var htmlns = "http://www.w3.org/1999/xhtml"
