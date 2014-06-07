@@ -59,3 +59,30 @@ proto.getElementById = function getElementById(id, parent) {
 
     return result
 }
+
+proto.getElementsByClassName = function getElementsByClassName(classNames, parent) {
+    if (classNames.indexOf(" ") != -1) {
+        throw new Error("Not yet implemented: getElementsByClassName for multiple class names");
+    }
+
+    if (!parent) {
+        parent = this.body
+    }
+
+    if (parent.className === classNames) {
+        return [parent]
+    }
+
+    var arr = parent.childNodes
+    var result = null
+
+    if (!arr) {
+        return result
+    }
+
+    for (var i = 0, len = arr.length; !result && i < len; i++) {
+        result = getElementsByClassName(classNames, arr[i])
+    }
+
+    return result
+}
