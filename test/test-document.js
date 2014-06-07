@@ -87,6 +87,44 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("can getElementsByClassName for a single class", function(assert) {
+        function append_div(className, parent) {
+            var div = document.createElement("div")
+            div.className = className
+            parent.appendChild(div)
+            return div
+        }
+
+        function assertSingleMatch(className, expectedElement) {
+            var result = document.getElementsByClassName(className)
+            assert.equal(result.length, 1)
+            assert.equal(result[0], expectedElement)
+        }
+
+        var divA   = append_div("A", document.body)
+        var divB   = append_div("B", document.body)
+        var divC   = append_div("C", document.body)
+
+        var divA1  = append_div("A1",  divA)
+        var divA2  = append_div("A2",  divA)
+        var divB1  = append_div("B1",  divB)
+        var divB2  = append_div("B2",  divB)
+        var divB2a = append_div("B2a", divB2)
+        var divB2b = append_div("B2b", divB2)
+
+        assertSingleMatch("A",    divA)
+        assertSingleMatch("B",    divB)
+        assertSingleMatch("C",    divC)
+        assertSingleMatch("A1",   divA1)
+        assertSingleMatch("A2",   divA2)
+        assertSingleMatch("B1",   divB1)
+        assertSingleMatch("B2",   divB2)
+        assertSingleMatch("B2a",  divB2a)
+        assertSingleMatch("B2b",  divB2b)
+
+        assert.end()
+    })
+
     test("can create/manipulate textnodes", function (assert) {
         var textnode = document.createTextNode("hello")
 
