@@ -22,6 +22,10 @@ function DOMElement(tagName, owner, namespace) {
     this.style = {}
     this.ownerDocument = owner || null
     this.namespaceURI = ns
+
+    if (this.tagName === 'INPUT') {
+      this.type = 'text'
+    }
 }
 
 DOMElement.prototype.type = "DOMElement"
