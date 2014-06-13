@@ -255,6 +255,11 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("input has type=text by default", function (assert) {
+        assert.equal(document.createElement("input").type, "text");
+        assert.end()
+    })
+
     function elemString(element) {
         var html = String(element) || "[]"
 
