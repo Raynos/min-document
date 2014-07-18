@@ -16,7 +16,9 @@
     "url": "https://github.com/Raynos/min-document/issues",
     "email": "raynos2@gmail.com"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dom-walk": "^0.1.0"
+  },
   "devDependencies": {
     "run-browser": "git://github.com/Raynos/run-browser",
     "tap-dot": "^0.2.1",

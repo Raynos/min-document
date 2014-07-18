@@ -1,3 +1,5 @@
+var domWalk = require("dom-walk")
+
 var DOMText = require("./dom-text.js")
 var DOMElement = require("./dom-element.js")
 var DocumentFragment = require("./dom-fragment.js")
@@ -69,20 +71,15 @@ proto.getElementsByClassName = function getElementsByClassName(classNames, paren
         parent = this.body
     }
 
-    if (parent.className === classNames) {
-        return [parent]
-    }
+    var elems = []
 
-    var arr = parent.childNodes
-    var result = null
+    domWalk(parent, function (node) {
+        var classes = node.className.split(" ")
 
-    if (!arr) {
-        return result
-    }
+        if (classes.indexOf(classNames) !== -1) {
+            elems.push(node)
+        }
+    })
 
-    for (var i = 0, len = arr.length; !result && i < len; i++) {
-        result = getElementsByClassName(classNames, arr[i])
-    }
-
-    return result
+    return elems
 }

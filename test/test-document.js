@@ -125,6 +125,22 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("can getElementsByClassName for many elements", function (assert) {
+        function h(className) {
+            var div = document.createElement("div")
+            div.className = className
+            return div
+        }
+
+        document.body.appendChild(h("multi-class-bar"))
+        document.body.appendChild(h("multi-class-bar"))
+
+        var elems = document.getElementsByClassName("multi-class-bar")
+        assert.equal(elems.length, 2)
+
+        assert.end()
+    })
+
     test("can create/manipulate textnodes", function (assert) {
         var textnode = document.createTextNode("hello")
 
