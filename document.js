@@ -74,7 +74,8 @@ proto.getElementsByClassName = function getElementsByClassName(classNames, paren
     var elems = []
 
     domWalk(parent, function (node) {
-        var classes = node.className.split(" ")
+        var className = node.className || ""
+        var classes = className.split(" ")
 
         if (classes.indexOf(classNames) !== -1) {
             elems.push(node)
