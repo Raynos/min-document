@@ -276,6 +276,16 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("can set and get attributes", function (assert) {
+        var elem = document.createElement("div")
+        assert.equal(elem.getAttribute("foo"), null)
+        elem.setAttribute("foo", "bar")
+        assert.equal(elem.getAttribute("foo"), "bar")
+        elem.removeAttribute("foo")
+        assert.equal(elem.getAttribute("foo"), null)
+        assert.end()
+    })
+
     function elemString(element) {
         var html = String(element) || "[]"
 

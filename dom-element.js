@@ -22,6 +22,7 @@ function DOMElement(tagName, owner, namespace) {
     this.style = {}
     this.ownerDocument = owner || null
     this.namespaceURI = ns
+    this._attributes = {}
 
     if (this.tagName === 'INPUT') {
       this.type = 'text'
@@ -90,6 +91,25 @@ DOMElement.prototype.insertBefore =
 
         elem.parentNode = this
         return elem
+    }
+
+DOMElement.prototype.setAttribute =
+    function _Element_setAttribute(name, value) {
+        this._attributes[name] = value
+    }
+
+DOMElement.prototype.getAttribute =
+    function _Element_getAttribute(name) {
+        if (typeof this._attributes[name] !== "string") {
+            return null
+        }
+
+        return this._attributes[name]
+    }
+
+DOMElement.prototype.removeAttribute =
+    function _Element_removeAttribute(name) {
+        delete this._attributes[name]
     }
 
 DOMElement.prototype.removeEventListener = removeEventListener
