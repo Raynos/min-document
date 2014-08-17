@@ -54,6 +54,7 @@ function testDomElement(document) {
         assertMatch("B2a",  [divB2a], divB2)
         assertMatch("B2b",  [], divA)
 
+        cleanup()
         assert.end()
     })
 }
