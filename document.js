@@ -63,9 +63,7 @@ proto.getElementById = function getElementById(id, parent) {
 }
 
 proto.getElementsByClassName = function getElementsByClassName(classNames, parent) {
-    if (classNames.indexOf(" ") != -1) {
-        throw new Error("Not yet implemented: getElementsByClassName for multiple class names");
-    }
+    var classes = classNames.split(" ");
 
     if (!parent) {
         parent = this.body
@@ -74,10 +72,12 @@ proto.getElementsByClassName = function getElementsByClassName(classNames, paren
     var elems = []
 
     domWalk(parent, function (node) {
-        var className = node.className || ""
-        var classes = className.split(" ")
+        var nodeClassName = node.className || ""
+        var nodeClasses = nodeClassName.split(" ")
 
-        if (classes.indexOf(classNames) !== -1) {
+        if (classes.every(function (item) {
+            return nodeClasses.indexOf(item) !== -1
+        })) {
             elems.push(node)
         }
     })
