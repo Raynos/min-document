@@ -3,6 +3,8 @@ var test = require("tape")
 module.exports = testDocument
 
 function testDocument(document) {
+    var cleanup = require('./cleanup')(document)
+
     test("document is a Document", function (assert) {
         assert.equal(typeof document.createTextNode, "function")
         assert.equal(typeof document.createElement, "function")
@@ -24,6 +26,7 @@ function testDocument(document) {
         assert.equal(html, "<div class=\"foo bar\">" +
             "<span>Hello!</span></div>")
 
+        cleanup()
         assert.end()
     })
 
@@ -51,6 +54,7 @@ function testDocument(document) {
         frag.replaceChild(h1, h2)
         assert.equal(fragString(frag), "<h1></h1>")
 
+        cleanup()
         assert.end()
     })
 
@@ -84,6 +88,7 @@ function testDocument(document) {
         assert.equal(document.getElementById(221),  div221)
         assert.equal(document.getElementById(222),  div222)
 
+        cleanup()
         assert.end()
     })
 
@@ -122,6 +127,7 @@ function testDocument(document) {
         assertSingleMatch("B2a",  divB2a)
         assertSingleMatch("B2b",  divB2b)
 
+        cleanup()
         assert.end()
     })
 
@@ -138,6 +144,7 @@ function testDocument(document) {
         var elems = document.getElementsByClassName("multi-class-bar")
         assert.equal(elems.length, 2)
 
+        cleanup()
         assert.end()
     })
 
@@ -170,6 +177,7 @@ function testDocument(document) {
         assertMatch("X Y Z",    [divXYZ])
         assertMatch("X1 X2",   [divX1X2, divX1X2Y1])
 
+        cleanup()
         assert.end()
     })
 
@@ -257,6 +265,7 @@ function testDocument(document) {
         assert.equal(rootNode.childNodes.length, 2)
         assert.equal(rootNode.childNodes[0], newElement)
         assert.equal(rootNode.childNodes[1], child)
+        cleanup()
         assert.end()
     })
 
@@ -270,6 +279,7 @@ function testDocument(document) {
         assert.equal(rootNode.childNodes.length, 2)
         assert.equal(rootNode.childNodes[0], child)
         assert.equal(rootNode.childNodes[1], newElement)
+        cleanup()
         assert.end()
     })
 
@@ -300,6 +310,7 @@ function testDocument(document) {
         assert.equal(c3.parentNode, rootNode)
         assert.equal(c2.parentNode, null)
 
+        cleanup()
         assert.end()
     })
 
