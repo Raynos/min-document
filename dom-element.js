@@ -124,3 +124,7 @@ DOMElement.prototype.focus = function _Element_focus() {
 DOMElement.prototype.toString = function _Element_toString() {
     return serializeElement(this)
 }
+
+DOMElement.prototype.getElementsByClassName = function _Element_getElementsByClassName(classNames) {
+    return this.ownerDocument.getElementsByClassName(classNames, this)
+}
