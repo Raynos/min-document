@@ -141,6 +141,38 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("can getElementsByClassName for many classes", function(assert) {
+        function append_div(classNames, parent) {
+            var div = document.createElement("div")
+            div.className = classNames
+            parent.appendChild(div)
+            return div
+        }
+
+        function assertMatch(classNames, expectedElements) {
+            var result = document.getElementsByClassName(classNames)
+            assert.equal(result.length, expectedElements.length)
+            for (var i = 0; i < expectedElements.length; i++) {
+                assert.notEqual(expectedElements.indexOf(result[i]), -1)
+            }
+        }
+
+        var divXYZ   = append_div("X Y Z", document.body)
+        var divYZ   = append_div("Y Z", document.body)
+        var divZX  = append_div("Z X", document.body)
+
+        var divX1X2  = append_div("X1 X2",  divXYZ)
+        var divX1X2Y1  = append_div("X1 X2 Y1",  divXYZ)
+
+
+        assertMatch("X",    [divXYZ, divZX])
+        assertMatch("Y Z",    [divXYZ, divYZ])
+        assertMatch("X Y Z",    [divXYZ])
+        assertMatch("X1 X2",   [divX1X2, divX1X2Y1])
+
+        assert.end()
+    })
+
     test("can create/manipulate textnodes", function (assert) {
         var textnode = document.createTextNode("hello")
 
