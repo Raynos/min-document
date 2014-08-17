@@ -44,6 +44,10 @@ type DOMElement := {
     dispatchEvent: dispatchEvent,
     focus: () => void,
     toString: (this: DOMElement) => String
+    getElementsByClassName: (
+        this: DOMElement,
+        className: String
+    ) => Array<DOMElement>
 }
 
 type DocumentFragment := {
@@ -79,6 +83,11 @@ type Document := {
         id: String,
         parent?: DOMElement
     ) => null | DOMElement
+    getElementsByClassName: (
+        this: Document,
+        className: String
+        parent?: DOMElement
+    ) => Array<DOMElement>
 }
 
 type Event := {
