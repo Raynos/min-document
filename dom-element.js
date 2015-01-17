@@ -93,24 +93,43 @@ DOMElement.prototype.insertBefore =
         return elem
     }
 
-DOMElement.prototype.setAttribute =
-    function _Element_setAttribute(name, value) {
-        this._attributes[name] = value
+DOMElement.prototype.setAttributeNS =
+    function _Element_setAttributeNS(namespace, name, value) {
+        var colonPosition = name.indexOf(":")
+        var localName = colonPosition > -1 ? name.substr(colonPosition + 1) : name
+        var attributes = this._attributes[namespace] || (this._attributes[namespace] = {})
+        attributes[localName] = value
     }
 
-DOMElement.prototype.getAttribute =
-    function _Element_getAttribute(name) {
-        if (typeof this._attributes[name] !== "string") {
+DOMElement.prototype.getAttributeNS =
+    function _Element_getAttributeNS(namespace, name) {
+        var attributes = this._attributes[namespace];
+        if (!(attributes && typeof attributes[name] === "string")) {
             return null
         }
 
-        return this._attributes[name]
+        return attributes[name]
     }
 
-DOMElement.prototype.removeAttribute =
-    function _Element_removeAttribute(name) {
-        delete this._attributes[name]
+DOMElement.prototype.removeAttributeNS =
+    function _Element_removeAttributeNS(namespace, name) {
+        var attributes = this._attributes[namespace];
+        if (attributes) {
+            delete attributes[name]
+        }
     }
+
+DOMElement.prototype.setAttribute = function _Element_setAttribute(name, value) {
+    return this.setAttributeNS(null, name, value)
+}
+
+DOMElement.prototype.getAttribute = function _Element_getAttribute(name) {
+    return this.getAttributeNS(null, name)
+}
+
+DOMElement.prototype.removeAttribute = function _Element_removeAttribute(name) {
+    return this.removeAttributeNS(null, name)
+}
 
 DOMElement.prototype.removeEventListener = removeEventListener
 DOMElement.prototype.addEventListener = addEventListener

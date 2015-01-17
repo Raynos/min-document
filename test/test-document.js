@@ -329,6 +329,42 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("can set and get namespaced attributes", function(assert) {
+        var elem = document.createElement("div")
+
+        var ns = "http://ns.com/my"
+        assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
+        elem.setAttributeNS(ns, "myns:myattr", "the value")
+        assert.equal(elem.getAttributeNS(ns, "myattr"), "the value")
+        elem.removeAttributeNS(ns, "myattr")
+        assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
+
+        // Should work much like get/setAttribute when namespace is null.
+        assert.equal(elem.getAttributeNS(null, "foo"), blankAttributeNS())
+        assert.equal(elem.getAttribute("foo"), null)
+        elem.setAttributeNS(null, "foo", "bar")
+        assert.equal(elem.getAttributeNS(null, "foo"), "bar")
+        assert.equal(elem.getAttribute("foo"), "bar")
+        elem.removeAttributeNS(null, "foo")
+        assert.equal(elem.getAttributeNS(null, "foo"), blankAttributeNS())
+        assert.equal(elem.getAttribute("foo"), null)
+        assert.end()
+    })
+
+    function blankAttributeNS() {
+        // Most browsers conform to the latest version of the DOM spec,
+        // which requires `getAttributeNS` to return `null` when the attribute
+        // doesn't exist, but some browsers (including phantomjs) implement the
+        // old version of the spec and return an empty string instead, see:
+        // https://developer.mozilla.org/en-US/docs/Web/API/element.getAttributeNS#Return_value
+        var div = document.createElement("div")
+        var blank = div.getAttributeNS(null, "foo")
+        if (!(blank === null || blank === "")) {
+            throw "Expected blank attribute to be either null or empty string"
+        }
+        return blank;
+    }
+
     function elemString(element) {
         var html = String(element) || "[]"
 
