@@ -28,6 +28,10 @@ function serializeElement(elem) {
 function isProperty(elem, key) {
     var type = typeof elem[key]
 
+    if (key === "style" && Object.keys(elem.style).length > 0) {
+      return true
+    }
+
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
@@ -76,6 +80,13 @@ function properties(elem) {
         if (isProperty(elem, key)) {
             props.push({ name: key, value: elem[key] })
         }
+    }
+
+    for (var ns in elem._attributes) {
+      for (var attribute in elem._attributes[ns]) {
+        var name = (ns !== "null" ? ns + ":" : "") + attribute
+        props.push({ name: name, value: elem._attributes[ns][attribute] })
+      }
     }
 
     if (elem.className) {

@@ -315,18 +315,43 @@ function testDocument(document) {
     })
 
     test("input has type=text by default", function (assert) {
-        assert.equal(document.createElement("input").type, "text");
+        var elem = document.createElement("input")
+        assert.equal(elem.type, "text");
+        assert.equal(elemString(elem), "<input type=\"text\"></input>")
         assert.end()
     })
 
     test("can set and get attributes", function (assert) {
         var elem = document.createElement("div")
         assert.equal(elem.getAttribute("foo"), null)
+        assert.equal(elemString(elem), "<div></div>")
+
         elem.setAttribute("foo", "bar")
         assert.equal(elem.getAttribute("foo"), "bar")
+        assert.equal(elemString(elem), "<div foo=\"bar\"></div>")
+
         elem.removeAttribute("foo")
         assert.equal(elem.getAttribute("foo"), null)
+        assert.equal(elemString(elem), "<div></div>")
+
         assert.end()
+    })
+    
+    test("can set and set style properties", function(assert) {
+      var elem = document.createElement("div")
+      assert.equal(elemString(elem), "<div></div>")
+
+      elem.style.color = "red";
+      assert.equal(elem.style.color, "red")
+      assert.equal(elemString(elem), "<div style=\"color:red;\"></div>")
+
+      elem.style.background = "blue";
+      assert.equal(elem.style.color, "red")
+      assert.equal(elem.style.background, "blue")
+      assert.equal(elemString(elem),
+                   "<div style=\"color:red;background:blue;\"></div>")
+
+      assert.end()
     })
 
     test("can set and get namespaced attributes", function(assert) {
