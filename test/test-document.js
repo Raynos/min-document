@@ -376,13 +376,13 @@ function testDocument(document) {
 
       elem.style.color = "red";
       assert.equal(elem.style.color, "red")
-      assert.equal(elemString(elem), "<div style=\"color:red;\"></div>")
+      assert.equal(elemString(elem), "<div style=\"color: red; \"></div>")
 
-      elem.style.background = "blue";
+      elem.style.backgroundColor = "blue";
       assert.equal(elem.style.color, "red")
-      assert.equal(elem.style.background, "blue")
+      assert.equal(elem.style.backgroundColor, "blue")
       assert.equal(elemString(elem),
-                   "<div style=\"color:red;background:blue;\"></div>")
+                   "<div style=\"color: red; background-color: blue; \"></div>")
 
       assert.end()
     })

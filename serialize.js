@@ -49,7 +49,10 @@ function stylify(styles) {
     var attr = ""
     Object.keys(styles).forEach(function (key) {
         var value = styles[key]
-        attr += key + ":" + value + ";"
+          , name = key.replace(/([A-Z])/g, function(_, c) {
+                                             return '-' + c.toLowerCase();
+                                           })
+        attr += name + ": " + value + "; "
     })
     return attr
 }
