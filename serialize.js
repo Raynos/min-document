@@ -5,6 +5,10 @@ function serializeElement(elem) {
 
     var tagname = elem.tagName
 
+    var voidElements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
+                        'input', 'keygen', 'link', 'menuitem', 'meta', 'param',
+                        'source', 'track', 'wbr']
+
     if (elem.namespaceURI === "http://www.w3.org/1999/xhtml") {
         tagname = tagname.toLowerCase()
     }
@@ -20,7 +24,10 @@ function serializeElement(elem) {
         strings.push(node.toString())
     })
 
-    strings.push("</" + tagname + ">")
+    if (!(elem.namespaceURI === "http://www.w3.org/1999/xhtml"
+     && voidElements.indexOf(tagname) !== -1)) {
+        strings.push("</" + tagname + ">")
+    }
 
     return strings.join("")
 }
