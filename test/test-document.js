@@ -394,8 +394,11 @@ function testDocument(document) {
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
         elem.setAttributeNS(ns, "myns:myattr", "the value")
         assert.equal(elem.getAttributeNS(ns, "myattr"), "the value")
+        assert.equal(elemString(elem),"<div myattr=\"the value\"></div>")
+
         elem.removeAttributeNS(ns, "myattr")
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
+        assert.equal(elemString(elem),"<div></div>")
 
         // Should work much like get/setAttribute when namespace is null.
         assert.equal(elem.getAttributeNS(null, "foo"), blankAttributeNS())
@@ -403,9 +406,11 @@ function testDocument(document) {
         elem.setAttributeNS(null, "foo", "bar")
         assert.equal(elem.getAttributeNS(null, "foo"), "bar")
         assert.equal(elem.getAttribute("foo"), "bar")
+        assert.equal(elemString(elem),"<div foo=\"bar\"></div>")
         elem.removeAttributeNS(null, "foo")
         assert.equal(elem.getAttributeNS(null, "foo"), blankAttributeNS())
         assert.equal(elem.getAttribute("foo"), null)
+        assert.equal(elemString(elem),"<div></div>")
         assert.end()
     })
 

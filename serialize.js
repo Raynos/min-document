@@ -94,8 +94,7 @@ function properties(elem) {
 
     for (var ns in elem._attributes) {
       for (var attribute in elem._attributes[ns]) {
-        var name = (ns !== "null" ? ns + ":" : "") + attribute
-        props.push({ name: name, value: elem._attributes[ns][attribute] })
+        props.push({ name: attribute, value: elem._attributes[ns][attribute] })
       }
     }
 
