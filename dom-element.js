@@ -97,13 +97,13 @@ DOMElement.prototype.setAttributeNS =
     function _Element_setAttributeNS(namespace, name, value) {
         var colonPosition = name.indexOf(":")
         var localName = colonPosition > -1 ? name.substr(colonPosition + 1) : name
-        var attributes = this._attributes[namespace] || (this._attributes[namespace] = {})
-        attributes[localName] = value
+        var attributes = namespace === null ? this : (this._attributes[namespace] || (this._attributes[namespace] = {}))
+        attributes[localName] = String(value)
     }
 
 DOMElement.prototype.getAttributeNS =
     function _Element_getAttributeNS(namespace, name) {
-        var attributes = this._attributes[namespace];
+        var attributes = namespace === null ? this : this._attributes[namespace];
         if (!(attributes && typeof attributes[name] === "string")) {
             return null
         }
@@ -113,7 +113,7 @@ DOMElement.prototype.getAttributeNS =
 
 DOMElement.prototype.removeAttributeNS =
     function _Element_removeAttributeNS(namespace, name) {
-        var attributes = this._attributes[namespace];
+        var attributes = namespace === null ? this : this._attributes[namespace];
         if (attributes) {
             delete attributes[name]
         }
