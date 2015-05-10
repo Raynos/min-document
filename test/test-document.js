@@ -13,6 +13,11 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("document has a head property", function(assert) {
+        assert.equal(document.head.tagName, "HEAD")
+        assert.end()
+    })
+
     test("can do stuff", function (assert) {
         var div = document.createElement("div")
         div.className = "foo bar"

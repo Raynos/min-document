@@ -12,8 +12,10 @@ function Document() {
         return new Document();
     }
 
+    this.head = this.createElement("head")
     this.body = this.createElement("body")
     this.documentElement = this.createElement("html")
+    this.documentElement.appendChild(this.head)
     this.documentElement.appendChild(this.body)
 }
 
