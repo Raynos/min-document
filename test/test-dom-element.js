@@ -57,4 +57,12 @@ function testDomElement(document) {
         cleanup()
         assert.end()
     })
+
+    test("does not serialize innerText as an attribute", function(assert) {
+      var div = document.createElement("div")
+      div.innerText = "Test"
+      assert.equal(div.toString(), "<div>Test</div>")
+      cleanup()
+      assert.end()
+    })
 }
