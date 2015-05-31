@@ -12,8 +12,8 @@ function serializeElement(elem) {
     strings.push("<" + tagname +
         properties(elem) + datasetify(elem) + ">")
 
-    if (elem.textContent) {
-        strings.push(elem.textContent)
+    if (elem.textContent || elem.innerText) {
+        strings.push(elem.textContent || elem.innerText)
     }
 
     elem.childNodes.forEach(function (node) {
@@ -35,7 +35,7 @@ function isProperty(elem, key) {
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent" && key !== "namespaceURI"
+        key !== "textContent" && key !== "innerText" && key !== "namespaceURI"
 }
 
 function stylify(styles) {
