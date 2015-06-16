@@ -1,5 +1,6 @@
 var domWalk = require("dom-walk")
 
+var Comment = require("./dom-comment.js")
 var DOMText = require("./dom-text.js")
 var DOMElement = require("./dom-element.js")
 var DocumentFragment = require("./dom-fragment.js")
@@ -46,6 +47,10 @@ proto.createEvent = function createEvent(family) {
     return new Event(family)
 }
 
+proto.createComment = function createComment(data) {
+    return new Comment(data, this)
+}
+
 proto.getElementById = function getElementById(id, parent) {
     if (!parent) {
         parent = this.body
@@ -79,13 +84,15 @@ proto.getElementsByClassName = function getElementsByClassName(classNames, paren
     var elems = []
 
     domWalk(parent, function (node) {
-        var nodeClassName = node.className || ""
-        var nodeClasses = nodeClassName.split(" ")
+        if (node.nodeType === 1) {
+            var nodeClassName = node.className || ""
+            var nodeClasses = nodeClassName.split(" ")
 
-        if (classes.every(function (item) {
-            return nodeClasses.indexOf(item) !== -1
-        })) {
-            elems.push(node)
+            if (classes.every(function (item) {
+                return nodeClasses.indexOf(item) !== -1
+            })) {
+                elems.push(node)
+            }
         }
     })
 
@@ -102,7 +109,7 @@ proto.getElementsByTagName = function getElementsByTagName(tagName, parent) {
     var elems = []
 
     domWalk(parent.childNodes, function (node) {
-        if (tagName === '*' || node.tagName.toLowerCase() === tagName) {
+        if (node.nodeType === 1 && (tagName === '*' || node.tagName.toLowerCase() === tagName)) {
             elems.push(node)
         }
     })
