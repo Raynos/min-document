@@ -18,6 +18,7 @@ function Document() {
     this.documentElement.appendChild(this.head)
     this.documentElement.appendChild(this.body)
     this.childNodes = [this.documentElement]
+    this.nodeType = 9
 }
 
 var proto = Document.prototype;

@@ -18,6 +18,11 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("document has nodeType 9", function (assert) {
+        assert.equal(document.nodeType, 9)
+        assert.end()
+    })
+
     test("can do stuff", function (assert) {
         var div = document.createElement("div")
         div.className = "foo bar"
