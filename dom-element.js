@@ -147,3 +147,7 @@ DOMElement.prototype.toString = function _Element_toString() {
 DOMElement.prototype.getElementsByClassName = function _Element_getElementsByClassName(classNames) {
     return this.ownerDocument.getElementsByClassName(classNames, this)
 }
+
+DOMElement.prototype.getElementsByTagName = function _Element_getElementsByTagName(tagName) {
+    return this.ownerDocument.getElementsByTagName(tagName, this)
+}

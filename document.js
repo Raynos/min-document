@@ -17,6 +17,7 @@ function Document() {
     this.documentElement = this.createElement("html")
     this.documentElement.appendChild(this.head)
     this.documentElement.appendChild(this.body)
+    this.childNodes = [this.documentElement]
 }
 
 var proto = Document.prototype;
@@ -80,6 +81,24 @@ proto.getElementsByClassName = function getElementsByClassName(classNames, paren
         if (classes.every(function (item) {
             return nodeClasses.indexOf(item) !== -1
         })) {
+            elems.push(node)
+        }
+    })
+
+    return elems
+}
+
+proto.getElementsByTagName = function getElementsByTagName(tagName, parent) {
+    tagName = tagName.toLowerCase()
+
+    if (!parent) {
+        parent = this
+    }
+
+    var elems = []
+
+    domWalk(parent.childNodes, function (node) {
+        if (tagName === '*' || node.tagName.toLowerCase() === tagName) {
             elems.push(node)
         }
     })
