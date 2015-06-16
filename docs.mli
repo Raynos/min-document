@@ -1,3 +1,14 @@
+type Comment := {
+    data: String,
+    length: Number,
+    nodeName: "#comment",
+    nodeType: 8,
+    nodeValue: String,
+    ownerDoucment: null | Document,
+
+    toString: (this: Comment) => String
+}
+
 type DOMText := {
     data: String,
     type: "DOMTextNode",
@@ -74,6 +85,7 @@ type Document := {
     childNodes: Array<DOMChild>,
     documentElement: DOMElement,
 
+    createComment: (this: Document, data: String) => Commment,
     createTextNode: (this: Document, value: String) => DOMText,
     createElement: (this: Document, tagName: String) => DOMElement,
     createElementNS: (

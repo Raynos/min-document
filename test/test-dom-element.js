@@ -94,6 +94,9 @@ function testDomElement(document) {
 
         e1.appendChild(e2)
         e2.appendChild(e3)
+        // non-elements should be ignored
+        e3.appendChild(document.createTextNode('foo'))
+        e3.appendChild(document.createComment('bar'))
 
         var elems = e1.getElementsByTagName("*")
 
@@ -101,6 +104,14 @@ function testDomElement(document) {
         assert.equal(elems[0].tagName, "P")
         assert.equal(elems[1].tagName, "SPAN")
 
+        cleanup()
+        assert.end()
+    })
+
+    test("can serialize comment nodes", function(assert) {
+        var div = document.createElement("div")
+        div.appendChild(document.createComment("test"))
+        assert.equal(div.toString(), "<div><!--test--></div>")
         cleanup()
         assert.end()
     })

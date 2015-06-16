@@ -1,7 +1,7 @@
 var dispatchEvent = require("./event/dispatch-event.js")
 var addEventListener = require("./event/add-event-listener.js")
 var removeEventListener = require("./event/remove-event-listener.js")
-var serializeElement = require("./serialize.js")
+var serializeNode = require("./serialize.js")
 
 var htmlns = "http://www.w3.org/1999/xhtml"
 
@@ -141,7 +141,7 @@ DOMElement.prototype.focus = function _Element_focus() {
 }
 
 DOMElement.prototype.toString = function _Element_toString() {
-    return serializeElement(this)
+    return serializeNode(this)
 }
 
 DOMElement.prototype.getElementsByClassName = function _Element_getElementsByClassName(classNames) {

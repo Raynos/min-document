@@ -1,4 +1,13 @@
-module.exports = serializeElement
+module.exports = serializeNode
+
+function serializeNode(node) {
+    switch (node.nodeType) {
+        case 8:
+            return "<!--" + node.data + "-->"
+        default:
+            return serializeElement(node)
+    }
+}
 
 function serializeElement(elem) {
     var strings = []
@@ -17,7 +26,7 @@ function serializeElement(elem) {
     }
 
     elem.childNodes.forEach(function (node) {
-        strings.push(node.toString())
+        strings.push(serializeNode(node))
     })
 
     strings.push("</" + tagname + ">")
