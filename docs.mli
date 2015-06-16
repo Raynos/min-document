@@ -73,6 +73,7 @@ type Document := {
     body: DOMElement,
     childNodes: Array<DOMChild>,
     documentElement: DOMElement,
+    nodeType: 9,
 
     createTextNode: (this: Document, value: String) => DOMText,
     createElement: (this: Document, tagName: String) => DOMElement,

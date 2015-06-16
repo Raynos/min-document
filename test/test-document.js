@@ -4,6 +4,7 @@ module.exports = testDocument
 
 function testDocument(document) {
     var cleanup = require('./cleanup')(document)
+    var Event = require('../Event');
 
     test("document is a Document", function (assert) {
         assert.equal(typeof document.createTextNode, "function")
@@ -15,6 +16,11 @@ function testDocument(document) {
 
     test("document has a head property", function(assert) {
         assert.equal(document.head.tagName, "HEAD")
+        assert.end()
+    })
+
+    test("document has nodeType 9", function (assert) {
+        assert.equal(document.nodeType, 9)
         assert.end()
     })
 
@@ -415,6 +421,24 @@ function testDocument(document) {
         assert.equal(elems[3].tagName, "DIV")
 
         cleanup()
+        assert.end()
+    })
+
+    test("can do events", function (assert) {
+        var x = 1
+        function incx() { x++ }
+
+        var ev = new Event();
+        ev.initEvent("click");
+        document.addEventListener("click", incx)
+        document.dispatchEvent(ev)
+
+        assert.equal(x, 2)
+
+        document.removeEventListener("click", incx)
+        document.dispatchEvent(ev)
+
+        assert.equal(x, 2)
         assert.end()
     })
 

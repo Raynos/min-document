@@ -4,6 +4,9 @@ var DOMText = require("./dom-text.js")
 var DOMElement = require("./dom-element.js")
 var DocumentFragment = require("./dom-fragment.js")
 var Event = require("./event.js")
+var dispatchEvent = require("./event/dispatch-event.js")
+var addEventListener = require("./event/add-event-listener.js")
+var removeEventListener = require("./event/remove-event-listener.js")
 
 module.exports = Document;
 
@@ -18,6 +21,7 @@ function Document() {
     this.documentElement.appendChild(this.head)
     this.documentElement.appendChild(this.body)
     this.childNodes = [this.documentElement]
+    this.nodeType = 9
 }
 
 var proto = Document.prototype;
@@ -105,3 +109,7 @@ proto.getElementsByTagName = function getElementsByTagName(tagName, parent) {
 
     return elems
 }
+
+proto.removeEventListener = removeEventListener
+proto.addEventListener = addEventListener
+proto.dispatchEvent = dispatchEvent
