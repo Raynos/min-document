@@ -43,11 +43,15 @@ type DOMElement := {
     addEventListener: addEventListener,
     dispatchEvent: dispatchEvent,
     focus: () => void,
-    toString: (this: DOMElement) => String
+    toString: (this: DOMElement) => String,
     getElementsByClassName: (
         this: DOMElement,
         className: String
-    ) => Array<DOMElement>
+    ) => Array<DOMElement>,
+    getElementsByTagName: (
+        this: DOMElement,
+        tagName: String
+    ) => Array<DOMElement>,
 }
 
 type DocumentFragment := {
@@ -67,6 +71,7 @@ type DocumentFragment := {
 
 type Document := {
     body: DOMElement,
+    childNodes: Array<DOMChild>,
     documentElement: DOMElement,
 
     createTextNode: (this: Document, value: String) => DOMText,
@@ -75,17 +80,22 @@ type Document := {
         this: Document,
         namespace: String | null,
         tagName: String
-    ) => DOMElement
+    ) => DOMElement,
     createDocumentFragment: (this: Document) => DocumentFragment,
     createEvent: () => Event,
     getElementById: (
         this: Document,
         id: String,
         parent?: DOMElement
-    ) => null | DOMElement
+    ) => null | DOMElement,
     getElementsByClassName: (
         this: Document,
         className: String
+        parent?: DOMElement
+    ) => Array<DOMElement>,
+    getElementsByTagName: (
+        this: Document,
+        tagName: String
         parent?: DOMElement
     ) => Array<DOMElement>
 }

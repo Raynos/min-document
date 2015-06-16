@@ -65,4 +65,43 @@ function testDomElement(document) {
       cleanup()
       assert.end()
     })
+
+    test("can getElementsByTagName", function(assert) {
+        var parent = document.createElement("div")
+        var child1 = document.createElement("span")
+        var child2 = document.createElement("span")
+
+        child1.id = "foo"
+        child2.id = "bar"
+
+        child1.appendChild(child2)
+        parent.appendChild(child1)
+
+        var elems = parent.getElementsByTagName("SPAN")
+
+        assert.equal(elems.length, 2)
+        assert.equal(elems[0].id, "foo")
+        assert.equal(elems[1].id, "bar")
+
+        cleanup()
+        assert.end()
+    })
+
+    test("can getElementsByTagName with *", function(assert) {
+        var e1 = document.createElement("div")
+        var e2 = document.createElement("p")
+        var e3 = document.createElement("span")
+
+        e1.appendChild(e2)
+        e2.appendChild(e3)
+
+        var elems = e1.getElementsByTagName("*")
+
+        assert.equal(elems.length, 2)
+        assert.equal(elems[0].tagName, "P")
+        assert.equal(elems[1].tagName, "SPAN")
+
+        cleanup()
+        assert.end()
+    })
 }

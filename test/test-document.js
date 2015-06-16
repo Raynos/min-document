@@ -341,7 +341,7 @@ function testDocument(document) {
 
         assert.end()
     })
-    
+
     test("can set and set style properties", function(assert) {
       var elem = document.createElement("div")
       assert.equal(elemString(elem), "<div></div>")
@@ -378,6 +378,43 @@ function testDocument(document) {
         elem.removeAttributeNS(null, "foo")
         assert.equal(elem.getAttributeNS(null, "foo"), blankAttributeNS())
         assert.equal(elem.getAttribute("foo"), null)
+        assert.end()
+    })
+
+    test("can getElementsByTagName", function(assert) {
+        var parent = document.createElement("div")
+        var child1 = document.createElement("span")
+        var child2 = document.createElement("span")
+
+        child1.id = "foo"
+        child2.id = "bar"
+
+        child1.appendChild(child2)
+        parent.appendChild(child1)
+        document.body.appendChild(parent)
+
+        var elems = document.getElementsByTagName("SPAN")
+
+        assert.equal(elems.length, 2)
+        assert.equal(elems[0].id, "foo")
+        assert.equal(elems[1].id, "bar")
+
+        cleanup()
+        assert.end()
+    })
+
+    test("can getElementsByTagName with *", function(assert) {
+        document.body.appendChild(document.createElement("div"))
+
+        var elems = document.getElementsByTagName("*")
+
+        assert.equal(elems.length, 4)
+        assert.equal(elems[0].tagName, "HTML")
+        assert.equal(elems[1].tagName, "HEAD")
+        assert.equal(elems[2].tagName, "BODY")
+        assert.equal(elems[3].tagName, "DIV")
+
+        cleanup()
         assert.end()
     })
 
