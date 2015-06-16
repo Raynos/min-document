@@ -69,6 +69,24 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("can assign attributes through .[attr] and .getAttribute(attr)",
+                                                            function(assert) {
+        var div = document.createElement("div")
+        div.id = "foo"
+        assert.equals(div.id, "foo")
+        assert.equals(div.getAttribute("id"), "foo")
+        assert.equals(elemString(div), "<div id=\"foo\"></div>")
+
+        var div2 = document.createElement("div")
+        div2.setAttribute("id", "bar")
+        assert.equals(div2.id, "bar")
+        assert.equals(div2.getAttribute("id"), "bar")
+        assert.equals(elemString(div2), "<div id=\"bar\"></div>")
+
+        cleanup()
+        assert.end()
+    })
+
     test("can getElementById", function (assert) {
 
         function append_div(id, parent) {
@@ -328,7 +346,22 @@ function testDocument(document) {
     test("input has type=text by default", function (assert) {
         var elem = document.createElement("input")
         assert.equal(elem.type, "text");
-        assert.equal(elemString(elem), "<input type=\"text\"></input>")
+
+        if (document.onload) {
+          // These tests are how the browser actually handles input-elements,
+          // which we don't try an emulate as it is somewhat complicated and
+          // is a bit of an edge-case
+          assert.equal(elem.getAttribute("type"), null);
+          assert.equal(elemString(elem), "<input>")
+        }
+
+        elem.setAttribute('type', 'text')
+        assert.equal(elem.type, "text");
+        assert.equal(elem.getAttribute("type"), "text");
+        // Now that we have explicitly set the type, both min-document and
+        // browers agree what the serialization should be...
+        assert.equal(elemString(elem), "<input type=\"text\">")
+
         assert.end()
     })
 
@@ -354,13 +387,13 @@ function testDocument(document) {
 
       elem.style.color = "red";
       assert.equal(elem.style.color, "red")
-      assert.equal(elemString(elem), "<div style=\"color:red;\"></div>")
+      assert.equal(elemString(elem), "<div style=\"color: red; \"></div>")
 
-      elem.style.background = "blue";
+      elem.style.backgroundColor = "blue";
       assert.equal(elem.style.color, "red")
-      assert.equal(elem.style.background, "blue")
+      assert.equal(elem.style.backgroundColor, "blue")
       assert.equal(elemString(elem),
-                   "<div style=\"color:red;background:blue;\"></div>")
+                   "<div style=\"color: red; background-color: blue; \"></div>")
 
       assert.end()
     })
@@ -372,8 +405,11 @@ function testDocument(document) {
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
         elem.setAttributeNS(ns, "myns:myattr", "the value")
         assert.equal(elem.getAttributeNS(ns, "myattr"), "the value")
+        assert.equal(elemString(elem),"<div myattr=\"the value\"></div>")
+
         elem.removeAttributeNS(ns, "myattr")
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
+        assert.equal(elemString(elem),"<div></div>")
 
         // Should work much like get/setAttribute when namespace is null.
         assert.equal(elem.getAttributeNS(null, "foo"), blankAttributeNS())
@@ -381,9 +417,11 @@ function testDocument(document) {
         elem.setAttributeNS(null, "foo", "bar")
         assert.equal(elem.getAttributeNS(null, "foo"), "bar")
         assert.equal(elem.getAttribute("foo"), "bar")
+        assert.equal(elemString(elem),"<div foo=\"bar\"></div>")
         elem.removeAttributeNS(null, "foo")
         assert.equal(elem.getAttributeNS(null, "foo"), blankAttributeNS())
         assert.equal(elem.getAttribute("foo"), null)
+        assert.equal(elemString(elem),"<div></div>")
         assert.end()
     })
 

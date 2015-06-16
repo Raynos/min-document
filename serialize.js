@@ -14,6 +14,10 @@ function serializeElement(elem) {
 
     var tagname = elem.tagName
 
+    var voidElements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
+                        'input', 'keygen', 'link', 'menuitem', 'meta', 'param',
+                        'source', 'track', 'wbr']
+
     if (elem.namespaceURI === "http://www.w3.org/1999/xhtml") {
         tagname = tagname.toLowerCase()
     }
@@ -29,7 +33,10 @@ function serializeElement(elem) {
         strings.push(serializeNode(node))
     })
 
-    strings.push("</" + tagname + ">")
+    if (!(elem.namespaceURI === "http://www.w3.org/1999/xhtml"
+     && voidElements.indexOf(tagname) !== -1)) {
+        strings.push("</" + tagname + ">")
+    }
 
     return strings.join("")
 }
@@ -51,7 +58,10 @@ function stylify(styles) {
     var attr = ""
     Object.keys(styles).forEach(function (key) {
         var value = styles[key]
-        attr += key + ":" + value + ";"
+          , name = key.replace(/([A-Z])/g, function(_, c) {
+                                             return '-' + c.toLowerCase();
+                                           })
+        attr += name + ": " + value + "; "
     })
     return attr
 }
@@ -93,8 +103,7 @@ function properties(elem) {
 
     for (var ns in elem._attributes) {
       for (var attribute in elem._attributes[ns]) {
-        var name = (ns !== "null" ? ns + ":" : "") + attribute
-        props.push({ name: name, value: elem._attributes[ns][attribute] })
+        props.push({ name: attribute, value: elem._attributes[ns][attribute] })
       }
     }
 
