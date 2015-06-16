@@ -1,7 +1,11 @@
 module.exports = serializeNode
 
+var voidElements = /area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr/i;
+
 function serializeNode(node) {
     switch (node.nodeType) {
+        case 3:
+            return escapeText(node.data)
         case 8:
             return "<!--" + node.data + "-->"
         default:
@@ -18,18 +22,21 @@ function serializeElement(elem) {
         tagname = tagname.toLowerCase()
     }
 
-    strings.push("<" + tagname +
-        properties(elem) + datasetify(elem) + ">")
+    strings.push("<" + tagname + properties(elem) + datasetify(elem))
 
-    if (elem.textContent || elem.innerText) {
-        strings.push(elem.textContent || elem.innerText)
+    if (voidElements.test(tagname)) {
+        strings.push(" />")
+    } else {
+        strings.push(">")
+
+        if (elem.childNodes.length) {
+            strings.push.apply(strings, elem.childNodes.map(serializeNode))
+        } else {
+            strings.push(escapeText(elem.textContent || elem.innerText || ""))
+        }
+
+        strings.push("</" + tagname + ">")
     }
-
-    elem.childNodes.forEach(function (node) {
-        strings.push(serializeNode(node))
-    })
-
-    strings.push("</" + tagname + ">")
 
     return strings.join("")
 }
@@ -77,7 +84,7 @@ function stringify(list) {
             value = stylify(value)
         }
 
-        attributes.push(name + "=" + "\"" + value + "\"")
+        attributes.push(name + "=" + "\"" + escapeAttributeValue(value) + "\"")
     })
 
     return attributes.length ? " " + attributes.join(" ") : ""
@@ -103,4 +110,15 @@ function properties(elem) {
     }
 
     return props.length ? stringify(props) : ""
+}
+
+function escapeText(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+}
+
+function escapeAttributeValue(str) {
+    return escapeText(str).replace(/"/g, "&quot;")
 }
