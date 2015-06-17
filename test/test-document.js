@@ -30,17 +30,16 @@ function testDocument(document) {
 
         var span = document.createElement("span")
         div.appendChild(span)
-        span.textContent = "Hello!"
+        span.textContent = "Hello! <&>"
 
         var html = String(div.outerHTML || div)
 
         assert.equal(html, "<div class=\"foo bar\">" +
-            "<span>Hello!</span></div>")
+            "<span>Hello! &lt;&amp;&gt;</span></div>")
 
         cleanup()
         assert.end()
     })
-
 
     test("can createDocumentFragment", function (assert) {
         var frag = document.createDocumentFragment()
@@ -328,7 +327,7 @@ function testDocument(document) {
     test("input has type=text by default", function (assert) {
         var elem = document.createElement("input")
         assert.equal(elem.type, "text");
-        assert.equal(elemString(elem), "<input type=\"text\"></input>")
+        assert.equal(elemString(elem), "<input type=\"text\" />")
         assert.end()
     })
 

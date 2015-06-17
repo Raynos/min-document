@@ -60,8 +60,8 @@ function testDomElement(document) {
 
     test("does not serialize innerText as an attribute", function(assert) {
       var div = document.createElement("div")
-      div.innerText = "Test"
-      assert.equal(div.toString(), "<div>Test</div>")
+      div.innerText = "Test <&>"
+      assert.equal(div.toString(), "<div>Test &lt;&amp;&gt;</div>")
       cleanup()
       assert.end()
     })
@@ -112,6 +112,22 @@ function testDomElement(document) {
         var div = document.createElement("div")
         div.appendChild(document.createComment("test"))
         assert.equal(div.toString(), "<div><!--test--></div>")
+        cleanup()
+        assert.end()
+    })
+
+    test("can serialize text nodes", function(assert) {
+        var div = document.createElement("div")
+        div.appendChild(document.createTextNode('<test> "&'))
+        assert.equal(div.toString(), '<div>&lt;test&gt; "&amp;</div>')
+        cleanup()
+        assert.end()
+    })
+
+    test("escapes serialized attribute values", function(assert) {
+        var div = document.createElement("div")
+        div.setAttribute("data-foo", '<p>"&')
+        assert.equal(div.toString(), '<div data-foo="&lt;p&gt;&quot;&amp;"></div>')
         cleanup()
         assert.end()
     })
