@@ -31,8 +31,8 @@ function serializeElement(elem) {
 
         if (elem.childNodes.length) {
             strings.push.apply(strings, elem.childNodes.map(serializeNode))
-        } else {
-            strings.push(escapeText(elem.textContent || elem.innerText || ""))
+        } else if (elem.textContent || elem.innerText) {
+            strings.push(escapeText(elem.textContent || elem.innerText))
         }
 
         strings.push("</" + tagname + ">")
