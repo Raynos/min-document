@@ -99,17 +99,14 @@ type Document := {
     getElementById: (
         this: Document,
         id: String,
-        parent?: DOMElement
     ) => null | DOMElement,
     getElementsByClassName: (
         this: Document,
         className: String
-        parent?: DOMElement
     ) => Array<DOMElement>,
     getElementsByTagName: (
         this: Document,
         tagName: String
-        parent?: DOMElement
     ) => Array<DOMElement>
 }
 

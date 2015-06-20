@@ -1,3 +1,4 @@
+var domWalk = require("dom-walk")
 var dispatchEvent = require("./event/dispatch-event.js")
 var addEventListener = require("./event/add-event-listener.js")
 var removeEventListener = require("./event/remove-event-listener.js")
@@ -145,9 +146,34 @@ DOMElement.prototype.toString = function _Element_toString() {
 }
 
 DOMElement.prototype.getElementsByClassName = function _Element_getElementsByClassName(classNames) {
-    return this.ownerDocument.getElementsByClassName(classNames, this)
+    var classes = classNames.split(" ");
+    var elems = []
+
+    domWalk(this, function (node) {
+        if (node.nodeType === 1) {
+            var nodeClassName = node.className || ""
+            var nodeClasses = nodeClassName.split(" ")
+
+            if (classes.every(function (item) {
+                return nodeClasses.indexOf(item) !== -1
+            })) {
+                elems.push(node)
+            }
+        }
+    })
+
+    return elems
 }
 
 DOMElement.prototype.getElementsByTagName = function _Element_getElementsByTagName(tagName) {
-    return this.ownerDocument.getElementsByTagName(tagName, this)
+    tagName = tagName.toLowerCase()
+    var elems = []
+
+    domWalk(this.childNodes, function (node) {
+        if (node.nodeType === 1 && (tagName === '*' || node.tagName.toLowerCase() === tagName)) {
+            elems.push(node)
+        }
+    })
+
+    return elems
 }
