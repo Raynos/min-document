@@ -423,6 +423,56 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("getElement* methods search outside the body", function(assert) {
+        var html = document.documentElement;
+        assert.equal(document.getElementsByTagName("html")[0], html)
+
+        html.id = "foo"
+        assert.equal(document.getElementById("foo"), html)
+
+        html.className = "bar"
+        assert.equal(document.getElementsByClassName("bar")[0], html)
+
+        // cleanup
+        html.id = ""
+        html.className = ""
+
+        cleanup()
+        assert.end()
+    })
+
+    test("getElement* methods can be passed to map()", function(assert) {
+        var e1 = document.createElement("div")
+        var e2 = document.createElement("span")
+
+        document.body.appendChild(e1)
+        document.body.appendChild(e2)
+
+        assert.deepEqual(
+            ["div", "span"].map(document.getElementsByTagName.bind(document)),
+            [[e1], [e2]]
+        )
+
+        e1.id = "1"
+        e2.id = "2"
+
+        assert.deepEqual(
+            ["1", "2"].map(document.getElementById.bind(document)),
+            [e1, e2]
+        )
+
+        e1.className = "foo"
+        e2.className = "bar"
+
+        assert.deepEqual(
+            ["foo", "bar"].map(document.getElementsByClassName.bind(document)),
+            [[e1], [e2]]
+        )
+
+        cleanup()
+        assert.end()
+    })
+
     test("can do events", function (assert) {
         var x = 1
         function incx() { x++ }
