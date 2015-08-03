@@ -335,14 +335,17 @@ function testDocument(document) {
         var elem = document.createElement("div")
         assert.equal(elem.getAttribute("foo"), null)
         assert.equal(elemString(elem), "<div></div>")
+        assert.notOk(elem.hasAttribute('foo'))
 
         elem.setAttribute("foo", "bar")
         assert.equal(elem.getAttribute("foo"), "bar")
         assert.equal(elemString(elem), "<div foo=\"bar\"></div>")
+        assert.ok(elem.hasAttribute('foo'))
 
         elem.removeAttribute("foo")
         assert.equal(elem.getAttribute("foo"), null)
         assert.equal(elemString(elem), "<div></div>")
+        assert.notOk(elem.hasAttribute('foo'))
 
         assert.end()
     })

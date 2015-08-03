@@ -120,6 +120,12 @@ DOMElement.prototype.removeAttributeNS =
         }
     }
 
+DOMElement.prototype.hasAttributeNS =
+    function _Element_hasAttributeNS(namespace, name) {
+        var attributes = this._attributes[namespace]
+        return !!attributes && name in attributes;
+    }
+
 DOMElement.prototype.setAttribute = function _Element_setAttribute(name, value) {
     return this.setAttributeNS(null, name, value)
 }
@@ -130,6 +136,10 @@ DOMElement.prototype.getAttribute = function _Element_getAttribute(name) {
 
 DOMElement.prototype.removeAttribute = function _Element_removeAttribute(name) {
     return this.removeAttributeNS(null, name)
+}
+
+DOMElement.prototype.hasAttribute = function _Element_hasAttribute(name) {
+    return this.hasAttributeNS(null, name)
 }
 
 DOMElement.prototype.removeEventListener = removeEventListener
