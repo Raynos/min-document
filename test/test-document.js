@@ -476,6 +476,17 @@ function testDocument(document) {
         assert.end()
     })
 
+    test("can check if it contains an element", function(assert) {
+    	var el = document.createElement("div")
+    	document.body.appendChild(el)
+
+    	assert.equals(document.contains(document.body), true)
+    	assert.equals(document.contains(el), true)
+
+    	cleanup()
+    	assert.end()
+    })
+
     test("can do events", function (assert) {
         var x = 1
         function incx() { x++ }

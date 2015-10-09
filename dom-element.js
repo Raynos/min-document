@@ -187,3 +187,9 @@ DOMElement.prototype.getElementsByTagName = function _Element_getElementsByTagNa
 
     return elems
 }
+
+DOMElement.prototype.contains = function _Element_contains(element) {
+    return domWalk(this, function (node) {
+        return element === node
+    }) || false
+}

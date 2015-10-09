@@ -65,6 +65,7 @@ proto.getElementById = function getElementById(id) {
 
 proto.getElementsByClassName = DOMElement.prototype.getElementsByClassName
 proto.getElementsByTagName = DOMElement.prototype.getElementsByTagName
+proto.contains = DOMElement.prototype.contains
 
 proto.removeEventListener = removeEventListener
 proto.addEventListener = addEventListener

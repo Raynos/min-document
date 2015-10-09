@@ -155,4 +155,22 @@ function testDomElement(document) {
         cleanup()
         assert.end()
     })
+
+    test("can check if an element contains another", function(assert) {
+        var parent = document.createElement("div")
+        var sibling = document.createElement("div")
+        var child1 = document.createElement("div")
+        var child2 = document.createElement("div")
+
+        child1.appendChild(child2)
+        parent.appendChild(child1)
+
+        assert.equal(parent.contains(parent), true)
+        assert.equal(parent.contains(sibling), false)
+        assert.equal(parent.contains(child1), true)
+        assert.equal(parent.contains(child2), true)
+
+        cleanup()
+        assert.end()
+    })
 }
