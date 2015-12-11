@@ -96,20 +96,26 @@ DOMElement.prototype.insertBefore =
 
 DOMElement.prototype.setAttributeNS =
     function _Element_setAttributeNS(namespace, name, value) {
+        var prefix = null
+        var localName = name
         var colonPosition = name.indexOf(":")
-        var localName = colonPosition > -1 ? name.substr(colonPosition + 1) : name
+        if (colonPosition > -1) {
+            prefix = name.substr(0, colonPosition)
+            localName = name.substr(colonPosition + 1)
+        }
         var attributes = this._attributes[namespace] || (this._attributes[namespace] = {})
-        attributes[localName] = value
+        attributes[localName] = {value: value, prefix: prefix}
     }
 
 DOMElement.prototype.getAttributeNS =
     function _Element_getAttributeNS(namespace, name) {
         var attributes = this._attributes[namespace];
-        if (!(attributes && typeof attributes[name] === "string")) {
+        var value = attributes && attributes[name] && attributes[name].value
+        if (typeof value !== "string") {
             return null
         }
 
-        return attributes[name]
+        return value
     }
 
 DOMElement.prototype.removeAttributeNS =
