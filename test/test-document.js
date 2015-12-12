@@ -374,6 +374,7 @@ function testDocument(document) {
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
         elem.setAttributeNS(ns, "myns:myattr", "the value")
         assert.equal(elem.getAttributeNS(ns, "myattr"), "the value")
+        assert.equal(elemString(elem), '<div myns:myattr="the value"></div>')
         elem.removeAttributeNS(ns, "myattr")
         assert.equal(elem.getAttributeNS(ns, "myattr"), blankAttributeNS())
 
