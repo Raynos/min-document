@@ -140,6 +140,14 @@ function testDomElement(document) {
         assert.end()
     })
 
+    test("can serialize style property", function(assert) {
+        var div = document.createElement("div")
+        div.style.fontSize = "16px"
+        assert.equal(div.toString(), "<div style=\"font-size:16px;\"></div>")
+        cleanup(); 
+        assert.end()
+    })
+
     test("can serialize text nodes", function(assert) {
         var div = document.createElement("div")
         div.appendChild(document.createTextNode('<test> "&'))

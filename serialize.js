@@ -58,6 +58,9 @@ function stylify(styles) {
     var attr = ""
     Object.keys(styles).forEach(function (key) {
         var value = styles[key]
+        key = key.replace(/[A-Z]/g, function(c) {
+            return "-" + c.toLowerCase();
+        })
         attr += key + ":" + value + ";"
     })
     return attr
