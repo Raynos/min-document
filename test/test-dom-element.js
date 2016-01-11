@@ -66,6 +66,14 @@ function testDomElement(document) {
       assert.end()
     })
 
+    test("does not serialize innerHTML as an attribute", function(assert) {
+      var div = document.createElement("div")
+      div.innerHTML = "Test <img />"
+      assert.equal(div.toString(), "<div>Test <img /></div>")
+      cleanup()
+      assert.end()
+    })
+
     test("can getElementsByTagName", function(assert) {
         var parent = document.createElement("div")
         var child1 = document.createElement("span")
