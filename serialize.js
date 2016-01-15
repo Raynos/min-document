@@ -33,6 +33,8 @@ function serializeElement(elem) {
             strings.push.apply(strings, elem.childNodes.map(serializeNode))
         } else if (elem.textContent || elem.innerText) {
             strings.push(escapeText(elem.textContent || elem.innerText))
+        } else if (elem.innerHTML) {
+            strings.push(elem.innerHTML)
         }
 
         strings.push("</" + tagname + ">")
@@ -51,13 +53,16 @@ function isProperty(elem, key) {
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent" && key !== "innerText" && key !== "namespaceURI"
+        key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&  key !== "innerHTML"
 }
 
 function stylify(styles) {
     var attr = ""
     Object.keys(styles).forEach(function (key) {
         var value = styles[key]
+        key = key.replace(/[A-Z]/g, function(c) {
+            return "-" + c.toLowerCase();
+        })
         attr += key + ":" + value + ";"
     })
     return attr

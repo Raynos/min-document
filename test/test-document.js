@@ -4,7 +4,7 @@ module.exports = testDocument
 
 function testDocument(document) {
     var cleanup = require('./cleanup')(document)
-    var Event = require('../Event');
+    var Event = require('../event');
 
     test("document is a Document", function (assert) {
         assert.equal(typeof document.createTextNode, "function")

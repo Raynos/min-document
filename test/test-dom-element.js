@@ -66,6 +66,14 @@ function testDomElement(document) {
       assert.end()
     })
 
+    test("does not serialize innerHTML as an attribute", function(assert) {
+      var div = document.createElement("div")
+      div.innerHTML = "Test <img />"
+      assert.equal(div.toString(), "<div>Test <img /></div>")
+      cleanup()
+      assert.end()
+    })
+
     test("can getElementsByTagName", function(assert) {
         var parent = document.createElement("div")
         var child1 = document.createElement("span")
@@ -137,6 +145,14 @@ function testDomElement(document) {
         div.appendChild(document.createComment("test"))
         assert.equal(div.toString(), "<div><!--test--></div>")
         cleanup()
+        assert.end()
+    })
+
+    test("can serialize style property", function(assert) {
+        var div = document.createElement("div")
+        div.style.fontSize = "16px"
+        assert.equal(div.toString(), "<div style=\"font-size:16px;\"></div>")
+        cleanup(); 
         assert.end()
     })
 
