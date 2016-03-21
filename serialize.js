@@ -118,7 +118,15 @@ function properties(elem) {
     return props.length ? stringify(props) : ""
 }
 
-function escapeText(str) {
+function escapeText(s) {
+    var str = '';
+
+    if (typeof(s) === 'string') { 
+        str = s; 
+    } else if (s) {
+        str = s.toString();
+    }
+
     return str
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
