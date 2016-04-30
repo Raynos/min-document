@@ -27,7 +27,7 @@ function DOMElement(tagName, owner, namespace) {
     this._attributes = {}
 
     if (this.tagName === 'INPUT') {
-      this.type = 'text'
+      this.setAttribute('type', 'text')
     }
 }
 
