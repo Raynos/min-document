@@ -326,8 +326,10 @@ function testDocument(document) {
 
     test("input has type=text by default", function (assert) {
         var elem = document.createElement("input")
-        assert.equal(elem.type, "text");
+        assert.equal(elem.getAttribute("type"), "text");
         assert.equal(elemString(elem), "<input type=\"text\" />")
+        elem.setAttribute("type", "file")
+        assert.equal(elemString(elem), "<input type=\"file\" />")
         assert.end()
     })
 
