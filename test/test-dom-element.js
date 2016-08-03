@@ -156,6 +156,14 @@ function testDomElement(document) {
         assert.end()
     })
 
+    test("can serialize style as a string", function(assert) {
+      var div = document.createElement("div")
+      div.setAttribute('style', 'display: none')
+      assert.equal(div.toString(), "<div style=\"display: none\"></div>")
+      cleanup()
+      assert.end()
+    })
+
     test("can serialize text nodes", function(assert) {
         var div = document.createElement("div")
         div.appendChild(document.createTextNode('<test> "&'))

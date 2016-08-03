@@ -57,6 +57,7 @@ function isProperty(elem, key) {
 }
 
 function stylify(styles) {
+    if (typeof styles === 'string') return styles
     var attr = ""
     Object.keys(styles).forEach(function (key) {
         var value = styles[key]
