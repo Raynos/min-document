@@ -16,6 +16,7 @@ function DOMElement(tagName, owner, namespace) {
     var ns = namespace === undefined ? htmlns : (namespace || null)
 
     this.tagName = ns === htmlns ? String(tagName).toUpperCase() : tagName
+    this.nodeName = this.tagName
     this.className = ""
     this.dataset = {}
     this.childNodes = []
@@ -26,7 +27,7 @@ function DOMElement(tagName, owner, namespace) {
     this._attributes = {}
 
     if (this.tagName === 'INPUT') {
-      this.type = 'text';
+      this.type = 'text'
     }
 }
 
