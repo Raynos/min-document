@@ -201,9 +201,23 @@ function testDomElement(document) {
     test("can handle non string attribute values", function(assert) {
         var div = document.createElement("div")
         div.setAttribute("data-number", 100)
+        div.setAttribute("data-zero", 0)
         div.setAttribute("data-boolean", true)
+        div.setAttribute("data-false", false)
         div.setAttribute("data-null", null)
-        assert.equal(div.toString(), '<div data-number="100" data-boolean="true" data-null=""></div>')
+        assert.equal(div.toString(), '<div data-number="100" data-zero="0" data-boolean="true" data-false="false" data-null="null"></div>')
+        cleanup()
+        assert.end()
+    })
+
+    test("can handle non string property values", function(assert) {
+        var div = document.createElement("div")
+        div.id = 100
+        div.title = 0
+        div.contentEditable = true
+        div.selected = false
+        div.className = null
+        assert.equal(div.toString(), '<div id="100" title="0" contentEditable="true"></div>')
         cleanup()
         assert.end()
     })

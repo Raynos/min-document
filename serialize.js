@@ -51,7 +51,7 @@ function isProperty(elem, key) {
     }
 
     return elem.hasOwnProperty(key) &&
-        (type === "string" || type === "boolean" || type === "number") &&
+        (type === "string" || (type === "boolean" && elem[key]) || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
         key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&  key !== "innerHTML"
 }
@@ -120,15 +120,7 @@ function properties(elem) {
 }
 
 function escapeText(s) {
-    var str = '';
-
-    if (typeof(s) === 'string') { 
-        str = s; 
-    } else if (s) {
-        str = s.toString();
-    }
-
-    return str
+    return String(s)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
