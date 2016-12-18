@@ -90,7 +90,13 @@ function stringify(list) {
             value = stylify(value)
         }
 
-        attributes.push(name + "=" + "\"" + escapeAttributeValue(value) + "\"")
+        if (value === null || value === undefined || value === false) {
+          // nothing
+        } else if (value === true) {
+          attributes.push(name)
+        } else {
+          attributes.push(name + "=" + "\"" + escapeAttributeValue(value) + "\"")
+        }
     })
 
     return attributes.length ? " " + attributes.join(" ") : ""
