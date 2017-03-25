@@ -104,6 +104,12 @@ DOMElement.prototype.setAttributeNS =
             prefix = name.substr(0, colonPosition)
             localName = name.substr(colonPosition + 1)
         }
+        if (name === 'id') {
+          this.id = value
+        }
+        if (name === 'class') {
+          this.className = value
+        }
         if (this.tagName === 'INPUT' && name === 'type') {
           this.type = value;
         }
