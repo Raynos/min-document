@@ -35,8 +35,8 @@ function DOMElement(tagName, owner, namespace) {
         id: {
             enumerable: true,
             get: function () {
-            return _id
-        },
+                return _id
+            },
             set: function (newVal) {
                 if (_id === newVal) return
                 _id = newVal
