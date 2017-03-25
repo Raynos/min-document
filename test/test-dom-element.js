@@ -57,6 +57,14 @@ function testDomElement(document) {
         cleanup()
         assert.end()
     })
+    
+    test("setAttribute will properly affect id and className property", function (assert) {
+      var div = document.createElement("div")
+      div.setAttribute("class", "my-class")
+      console.log(div.toString())
+      assert.equal(div.toString(), "<div class=\"my-class\"></div>")
+      assert.end()
+    })
 
     test("does not serialize innerText as an attribute", function(assert) {
       var div = document.createElement("div")

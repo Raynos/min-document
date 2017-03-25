@@ -112,10 +112,6 @@ function properties(elem) {
       }
     }
 
-    if (elem.className) {
-        props.push({ name: "class", value: elem.className })
-    }
-
     return props.length ? stringify(props) : ""
 }
 
