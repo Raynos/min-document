@@ -53,7 +53,8 @@ function isProperty(elem, key) {
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&  key !== "innerHTML"
+        key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&
+        key !== "id" && key !== "innerHTML"
 }
 
 function stylify(styles) {
