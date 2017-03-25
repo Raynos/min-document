@@ -32,28 +32,28 @@ function DOMElement(tagName, owner, namespace) {
     var _id
     var _className
     Object.defineProperties(this, {
-      id: {
-        enumerable: true,
-        get: function () {
-          return _id
+        id: {
+            enumerable: true,
+            get: function () {
+            return _id
         },
-        set: function (newVal) {
-          if (_id === newVal) return
-          _id = newVal
-          this.setAttribute('id', _id)
-        }
-      },
-      className: {
-        enumerable: true,
-        get: function () {
-          return _className
+            set: function (newVal) {
+                if (_id === newVal) return
+                _id = newVal
+                this.setAttribute('id', _id)
+            }
         },
-        set: function (newVal) {
-          if (_className === newVal) return
-          _className = newVal
-          this.setAttribute('class', _className)
+        className: {
+            enumerable: true,
+            get: function () {
+              return _className
+            },
+            set: function (newVal) {
+                if (_className === newVal) return
+                _className = newVal
+                this.setAttribute('class', _className)
+            }
         }
-      }
     })
 }
 
