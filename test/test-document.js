@@ -328,6 +328,8 @@ function testDocument(document) {
         var elem = document.createElement("input")
         assert.equal(elem.getAttribute("type"), "text");
         assert.equal(elemString(elem), "<input type=\"text\" />")
+        elem.setAttribute("type", "file")
+        assert.equal(elemString(elem), "<input type=\"file\" />")
         assert.end()
     })
 
