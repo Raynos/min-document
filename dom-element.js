@@ -17,7 +17,6 @@ function DOMElement(tagName, owner, namespace) {
 
     this.tagName = ns === htmlns ? String(tagName).toUpperCase() : tagName
     this.nodeName = this.tagName
-    this.className = ""
     this.dataset = {}
     this.childNodes = []
     this.parentNode = null
@@ -29,6 +28,33 @@ function DOMElement(tagName, owner, namespace) {
     if (this.tagName === 'INPUT') {
       this.type = 'text'
     }
+    
+    var _id
+    var _className
+    Object.defineProperties(this, {
+        id: {
+            enumerable: true,
+            get: function () {
+                return _id
+            },
+            set: function (newVal) {
+                if (_id === newVal) return
+                _id = newVal
+                this.setAttribute('id', _id)
+            }
+        },
+        className: {
+            enumerable: true,
+            get: function () {
+              return _className
+            },
+            set: function (newVal) {
+                if (_className === newVal) return
+                _className = newVal
+                this.setAttribute('class', _className)
+            }
+        }
+    })
 }
 
 DOMElement.prototype.type = "DOMElement"
@@ -103,6 +129,12 @@ DOMElement.prototype.setAttributeNS =
         if (colonPosition > -1) {
             prefix = name.substr(0, colonPosition)
             localName = name.substr(colonPosition + 1)
+        }
+        if (name === 'id') {
+          this.id = value
+        }
+        if (name === 'class') {
+          this.className = value
         }
         if (this.tagName === 'INPUT' && name === 'type') {
           this.type = value;

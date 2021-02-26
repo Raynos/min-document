@@ -53,7 +53,8 @@ function isProperty(elem, key) {
     return elem.hasOwnProperty(key) &&
         (type === "string" || type === "boolean" || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&  key !== "innerHTML"
+        key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&
+        key !== "id" && key !== "innerHTML"
 }
 
 function stylify(styles) {
@@ -110,10 +111,6 @@ function properties(elem) {
         var name = (prop.prefix ? prop.prefix + ":" : "") + attribute
         props.push({ name: name, value: prop.value })
       }
-    }
-
-    if (elem.className) {
-        props.push({ name: "class", value: elem.className })
     }
 
     return props.length ? stringify(props) : ""
