@@ -46,12 +46,15 @@ function serializeElement(elem) {
 function isProperty(elem, key) {
     var type = typeof elem[key]
 
-    if (key === "style" && Object.keys(elem.style).length > 0) {
+    if (key === "style" && (
+        (type === "object" && Object.keys(elem.style).length > 0) || 
+        (type === "string" && elem.style)
+    )) {
       return true
     }
 
     return elem.hasOwnProperty(key) &&
-        (type === "string" || type === "boolean" || type === "number") &&
+        (type === "string" || (type === "boolean" && elem[key]) || type === "number") &&
         key !== "nodeName" && key !== "className" && key !== "tagName" &&
         key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&  key !== "innerHTML"
 }
@@ -120,15 +123,7 @@ function properties(elem) {
 }
 
 function escapeText(s) {
-    var str = '';
-
-    if (typeof(s) === 'string') { 
-        str = s; 
-    } else if (s) {
-        str = s.toString();
-    }
-
-    return str
+    return String(s)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
