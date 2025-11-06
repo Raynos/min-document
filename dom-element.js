@@ -128,9 +128,10 @@ DOMElement.prototype.getAttributeNS =
 
 DOMElement.prototype.removeAttributeNS =
     function _Element_removeAttributeNS(namespace, name) {
+        // Safely access and delete the attribute
         var attributes = this._attributes[namespace];
-        if (attributes) {
-            delete attributes[name]
+        if (attributes && Object.prototype.hasOwnProperty.call(attributes, name)) {
+            delete attributes[name];
         }
     }
 
